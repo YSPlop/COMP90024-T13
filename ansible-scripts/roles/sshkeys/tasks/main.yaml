@@ -1,5 +1,0 @@
-- name: Copy authorized keys
-  ansible.builtin.copy:
-    src: /home/ubuntu/.ssh/authorized_keys
-    dest: /home/ubuntu/.ssh/authorized_keys
-    mode: '0644'
