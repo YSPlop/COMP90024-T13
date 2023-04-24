@@ -3,4 +3,9 @@ vms:
     instance1:
       ansible_host: 172.26.134.106
   vars:
-    ansible_ssh_private_key_file: accesskey.pem 
+    ansible_ssh_private_key_file: accesskey.pem
+
+localhost:
+  hosts:
+    localhost:
+      ansible_connection: local

@@ -1,4 +1,5 @@
 ---
-- hosts: vms
+- hosts: all
   roles:
     - sshkeys
+    - docker

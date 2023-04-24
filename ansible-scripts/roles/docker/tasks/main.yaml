@@ -1,27 +1,30 @@
- tasks:
-    - name: Install required system packages
-      apt:
-        name:
-          - ca-certificates
-          - curl
-          - gnupg
-        state: latest
-        update_cache: true
+- name: Install required system packages
+  become: true
+  apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: latest
+    update_cache: true
 
-    - name: Add Docker GPG apt Key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
+- name: Add Docker GPG apt Key
+  become: true
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
 
-    - name: Add Docker Repository
-      apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu focal stable
-        state: present
+- name: Add Docker Repository
+  become: true
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
 
-    - name: Install docker-ce and docker-compose
-      apt:
-        name: 
-          - docker-ce
-          - docker-compose-plugin
-        state: latest
-        update_cache: true
+- name: Install docker-ce and docker-compose
+  become: true
+  apt:
+    name: 
+      - docker-ce
+      - docker-compose-plugin
+    state: latest
+    update_cache: true
