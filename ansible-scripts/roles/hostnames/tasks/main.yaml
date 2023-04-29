@@ -1,0 +1,7 @@
+- name: Print defined name
+  ansible.builtin.debug:
+    var: hostvars[inventory_hostname]['ansible_hostname']
+
+- name: Change hostname to defined name
+  ansible.builtin.command: hostnamectl set-hostname {{hostvars[inventory_hostname]['name']}}
+  become: yes
