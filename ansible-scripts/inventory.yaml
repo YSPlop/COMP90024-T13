@@ -1,7 +1,15 @@
 vms:
   hosts:
-    instance1:
+    backend:
+      ansible_host: 172.26.135.101
+    db-1:
+      ansible_host: 172.26.131.88
+    db-2:
+      ansible_host: 172.26.134.94
+    db-3:
       ansible_host: 172.26.134.106
+    harvester:
+      ansible_host: 172.26.135.127
   vars:
     ansible_ssh_private_key_file: accesskey.pem
 
