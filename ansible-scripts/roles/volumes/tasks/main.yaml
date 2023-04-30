@@ -1,0 +1,17 @@
+- name: attach volumes
+  openstack.cloud.server_volume:
+    state: present
+    volume: {{inventory_hostname}}
+    server: {{inventory_hostname}}
+    device: /dev/vdb
+    fstype: ext4
+
+- name: mount volumes
+  ansible.posix.mount:
+    path: /mnt/data
+    src: /dev/vdb
+
+- name: give rw permissions to mounted volume
+  ansible.builtin.command:
+    cmd: chmod 777 -R /mnt/data
+    become: yes

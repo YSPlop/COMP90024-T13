@@ -1,6 +1,10 @@
 ---
-- hosts: all
+# - hosts: all
+#   roles:
+#     - sshkeys
+#     - docker
+#     - hostnames
+
+- hosts: database
   roles:
-    #- sshkeys
-    #- docker
-    - hostnames
+    - volumes
