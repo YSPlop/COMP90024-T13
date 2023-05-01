@@ -6,14 +6,27 @@
 
 # get running containers
 - name: Get running containers
-  become: yes
-  command: docker ps --format "{{ '{{' }} .Names {{ '}}' }}"
+  ansible.builtin.command: docker ps --format "{{ '{{' }} .Image {{ '}}' }}"
   register: running
+  become: yes
 
-- debug: msg="{{running}}"
+- name: Print running containers
+  ansible.builtin.debug:
+    var: running['stdout_lines']
+
+
+# start containers here
+- name: Print running containers in hashtags
+  ansible.builtin.debug:
+    var: {item}
+  when: item in hashtags
+  loop: "{{running.stdout_lines}}"
+
+# stop containers here
+- name: Print running containers not in hashtags
+  ansible.builtin.debug:
+    var: {item}
+  when: item not in hashtags
+  loop: "{{running.stdout_lines}}"
+
 # build docker image
-
-# set container status
-
-# stop containers that are not in vars?
-# use difference to filter out 
