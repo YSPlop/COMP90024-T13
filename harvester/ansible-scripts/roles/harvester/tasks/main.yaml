@@ -14,18 +14,32 @@
   ansible.builtin.debug:
     var: running['stdout_lines']
 
-
 # start containers here
 - name: Print running containers in hashtags
   ansible.builtin.debug:
-    var: {item}
+    var: "{{item}}"
   when: item in hashtags
   loop: "{{running.stdout_lines}}"
+
+- name: Container started
+  community.docker.docker_container:
+    name: "{{item}}"
+    state: started
+    image: harvester
+  loop: "{{hashtags}}"
 
 # stop containers here
 - name: Print running containers not in hashtags
   ansible.builtin.debug:
-    var: {item}
+    var: "{{item}}"
+  when: item not in hashtags
+  loop: "{{running.stdout_lines}}"
+
+- name: Container stopped
+  community.docker.docker_container:
+    name: "{{item}}"
+    state: stopped
+    image: harvester
   when: item not in hashtags
   loop: "{{running.stdout_lines}}"
 
