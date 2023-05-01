@@ -1,0 +1,8 @@
+erl -name bus@172.26.131.88 -setcookie 'team13team13' -kernel inet_dist_listen_min 5984 -kernel inet_dist_listen_max 5984
+erl -name bus@172.26.134.94 -setcookie 'team13team13' -kernel inet_dist_listen_min 5984 -kernel inet_dist_listen_max 5984
+
+net_kernel:connect_node('bus@172.26.134.94').
+
+
+Follow setup on hyperlink:
+https://github.com/apache/couchdb/blob/main/src/docs/src/setup/cluster.rst
