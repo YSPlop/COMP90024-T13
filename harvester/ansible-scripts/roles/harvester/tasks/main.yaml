@@ -1,0 +1,19 @@
+# print hashtags to create harvesters for
+- name: List hashtags
+  ansible.builtin.debug:
+    var: {item}
+  loop: "{{hashtags}}"
+
+# get running containers
+- name: Get running containers
+  become: yes
+  command: docker ps --format "{{ '{{' }} .Names {{ '}}' }}"
+  register: running
+
+- debug: msg="{{running}}"
+# build docker image
+
+# set container status
+
+# stop containers that are not in vars?
+# use difference to filter out 
