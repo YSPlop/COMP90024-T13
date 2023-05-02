@@ -1,4 +1,4 @@
-# hashtags to harvest
-
+# list hashtags to harvest
+# list with empty item to stop all containers
 hashtags:
-  - cats
+  - 

@@ -25,11 +25,12 @@
     name: "{{item}}"
     state: started
     image: harvester
+    command: "{{item}}"
     container_default_behavior: no_defaults
   loop: "{{hashtags}}"
 
 # stop containers here
-- name: Print running containers not in hashtags
+- name: Print containers to stop
   ansible.builtin.debug:
     var: "{{item}}"
   when: item not in hashtags

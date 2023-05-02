@@ -3,4 +3,5 @@
   vars_files:
     - vars/hashtags.yaml
   roles:
+    - docker-build
     - harvester
