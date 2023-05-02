@@ -28,3 +28,7 @@
       - docker-compose-plugin
     state: latest
     update_cache: true
+
+- name: Execute the command in remote shell
+  ansible.builtin.script: roles/docker/docker-permissions.sh
+  become: yes
