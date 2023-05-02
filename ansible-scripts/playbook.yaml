@@ -5,6 +5,10 @@
 #     - docker
 #     - hostnames
 
-- hosts: database
+# - hosts: database
+#   roles:
+#     - volumes
+
+- hosts: localhost
   roles:
-    - volumes
+    - docker

@@ -6,26 +6,26 @@
 
 # get running containers
 - name: Get running containers
-  ansible.builtin.command: docker ps --format "{{ '{{' }} .Image {{ '}}' }}"
+  ansible.builtin.command: docker ps --format "{{ '{{' }} .Names {{ '}}' }}"
   register: running
-  become: yes
 
 - name: Print running containers
   ansible.builtin.debug:
     var: running['stdout_lines']
 
 # start containers here
-- name: Print running containers in hashtags
+- name: Print containers to run
   ansible.builtin.debug:
     var: "{{item}}"
   when: item in hashtags
-  loop: "{{running.stdout_lines}}"
+  loop: "{{hashtags}}"
 
-- name: Container started
+- name: Start containers
   community.docker.docker_container:
     name: "{{item}}"
     state: started
     image: harvester
+    container_default_behavior: no_defaults
   loop: "{{hashtags}}"
 
 # stop containers here
@@ -35,11 +35,12 @@
   when: item not in hashtags
   loop: "{{running.stdout_lines}}"
 
-- name: Container stopped
+- name: Stop Containers
   community.docker.docker_container:
     name: "{{item}}"
     state: stopped
     image: harvester
+    container_default_behavior: no_defaults
   when: item not in hashtags
   loop: "{{running.stdout_lines}}"
 
