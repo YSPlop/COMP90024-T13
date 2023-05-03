@@ -101,5 +101,4 @@ if __name__ == "__main__":
     
     # Output processed data as JSON file for v1, Omit in v2
     with open('output.json', 'w') as file:
-        json.dump(result, file)
-
+        json.dump(result, file, indent = 4)
