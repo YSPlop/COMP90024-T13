@@ -1,0 +1,3 @@
+- name: Change hostname to defined name
+  ansible.builtin.command: hostnamectl set-hostname {{hostvars[inventory_hostname]['name']}}
+  become: yes

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 #source openrc.sh
-ansible-playbook -i inventory.yaml -vvvv playbook.yaml
+ansible-playbook -K -i inventory.yaml playbook.yaml

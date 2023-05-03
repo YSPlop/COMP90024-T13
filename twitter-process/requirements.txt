@@ -1,0 +1,4 @@
+nltk==3.6.1
+reverse_geocoder==1.5.1
+numpy==1.20.1
+ijson==3.2.0.post0

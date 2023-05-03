@@ -1,4 +1,14 @@
 ---
-- hosts: vms
+# - hosts: all
+#   roles:
+#     - sshkeys
+#     - docker
+#     - hostnames
+
+# - hosts: database
+#   roles:
+#     - volumes
+
+- hosts: localhost
   roles:
-    - sshkeys
+    - docker

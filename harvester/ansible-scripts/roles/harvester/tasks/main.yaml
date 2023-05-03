@@ -1,0 +1,48 @@
+# print hashtags to create harvesters for
+- name: List hashtags
+  ansible.builtin.debug:
+    var: {item}
+  loop: "{{hashtags}}"
+
+# get running containers
+- name: Get running containers
+  ansible.builtin.command: docker ps --format "{{ '{{' }} .Names {{ '}}' }}"
+  register: running
+
+- name: Print running containers
+  ansible.builtin.debug:
+    var: running['stdout_lines']
+
+# start containers here
+- name: Print containers to run
+  ansible.builtin.debug:
+    var: "{{item}}"
+  when: item in hashtags
+  loop: "{{hashtags}}"
+
+- name: Start containers
+  community.docker.docker_container:
+    name: "{{item}}"
+    state: started
+    image: harvester
+    command: "{{item}}"
+    container_default_behavior: no_defaults
+  loop: "{{hashtags}}"
+
+# stop containers here
+- name: Print containers to stop
+  ansible.builtin.debug:
+    var: "{{item}}"
+  when: item not in hashtags
+  loop: "{{running.stdout_lines}}"
+
+- name: Stop Containers
+  community.docker.docker_container:
+    name: "{{item}}"
+    state: stopped
+    image: harvester
+    container_default_behavior: no_defaults
+  when: item not in hashtags
+  loop: "{{running.stdout_lines}}"
+
+# build docker image

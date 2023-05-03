@@ -1,0 +1,8 @@
+- name: Build the harvester image
+  community.docker.docker_image:
+    build:
+      path: /home/eldon/COMP90024-T13/harvester
+    name: harvester
+    source: build
+    debug: true
+    force_source: true
