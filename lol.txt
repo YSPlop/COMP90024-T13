@@ -1,8 +1,34 @@
 erl -name bus@172.26.131.88 -setcookie 'team13team13' -kernel inet_dist_listen_min 5984 -kernel inet_dist_listen_max 5984
-erl -name bus@172.26.134.94 -setcookie 'team13team13' -kernel inet_dist_listen_min 5984 -kernel inet_dist_listen_max 5984
+erl -name car@172.26.134.94 -setcookie 'team13team13' -kernel inet_dist_listen_min 5984 -kernel inet_dist_listen_max 5984
+erl -name car@172.26.134.106 -setcookie 'team13team13' -kernel inet_dist_listen_min 5984 -kernel inet_dist_listen_max 5984
 
-net_kernel:connect_node('bus@172.26.134.94').
+net_kernel:connect_node('car@172.26.134.94').
+
+172.26.134.22
 
 
 Follow setup on hyperlink:
 https://github.com/apache/couchdb/blob/main/src/docs/src/setup/cluster.rst
+
+
+# First, get two UUIDs to use later on. Be sure to use the SAME UUIDs on all nodes.
+curl http://172.26.131.88:5984/_uuids?count=2
+
+# CouchDB will respond with something like:
+#   {"uuids":["60c9e8234dfba3e2fdab04bf92001142","60c9e8234dfba3e2fdab04bf92001cc2"]}
+# Copy the provided UUIDs into your clipboard or a text editor for later use.
+# Use the first UUID as the cluster UUID.
+# Use the second UUID as the cluster shared http secret.
+
+# Create the admin user and password:
+curl -X PUT http://<server-IP|FQDN>:5984/_node/_local/_config/admins/admin -d '"password"'
+
+# Now, bind the clustered interface to all IP addresses available on this machine
+curl -X PUT http://<server-IP|FQDN>:5984/_node/_local/_config/chttpd/bind_address -d '"0.0.0.0"'
+
+# If not using the setup wizard / API endpoint, the following 2 steps are required:
+# Set the UUID of the node to the first UUID you previously obtained:
+curl -X PUT http://<server-IP|FQDN>:5984/_node/_local/_config/couchdb/uuid -d '"FIRST-UUID-GOES-HERE"'
+
+# Finally, set the shared http secret for cookie creation to the second UUID:
+curl -X PUT http://<server-IP|FQDN>:5984/_node/_local/_config/chttpd_auth/secret -d '"SECOND-UUID-GOES-HERE"'
