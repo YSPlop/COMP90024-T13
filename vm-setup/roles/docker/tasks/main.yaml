@@ -29,6 +29,11 @@
     state: latest
     update_cache: true
 
+- name: Ensure group "docker" exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
 - name: Add the user ubuntu to docker group
   ansible.builtin.user:
     name: ubuntu
