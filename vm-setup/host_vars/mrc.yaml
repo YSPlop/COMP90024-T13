@@ -1,0 +1,15 @@
+# Common vars
+availability_zone: melbourne-qh2-uom
+
+# Volume
+volumes:
+  - vol_name: db-1
+    vol_size: 50
+  - vol_name: db-2
+    vol_size: 50
+  - vol_name: db-3
+    vol_size: 50
+  - vol_name: frontend
+    vol_size: 20
+  - vol_name: backend
+    vol_size: 200
