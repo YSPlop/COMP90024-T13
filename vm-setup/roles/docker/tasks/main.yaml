@@ -29,6 +29,9 @@
     state: latest
     update_cache: true
 
-- name: Execute the command in remote shell
-  ansible.builtin.script: roles/docker/docker-permissions.sh
+- name: Add the user ubuntu to docker group
+  ansible.builtin.user:
+    name: ubuntu
+    groups: docker
+    append: yes
   become: yes
