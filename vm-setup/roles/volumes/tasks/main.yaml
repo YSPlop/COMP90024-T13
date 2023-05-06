@@ -1,0 +1,18 @@
+- name: create filesystem
+  community.general.filesystem:
+    dev: /dev/vdb
+    fstype: ext4
+  become: yes
+
+- name: mount volumes
+  ansible.posix.mount:
+    path: /mnt/data
+    src: /dev/vdb
+    fstype: ext4
+    state: "mounted"
+  become: yes
+
+- name: give rw permissions to mounted volume
+  ansible.builtin.command:
+    cmd: chmod 777 -R /mnt/data
+  become: yes
