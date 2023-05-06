@@ -30,6 +30,20 @@
         state: present
       environment:
         node: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
-        user: admin
-        password: password
+        masternode: 172.26.131.88
+
+- hosts: database:!db-1
+  tasks:
+    - name: add node to cluster
+      ansible.builtin.script: add-node.sh
+      environment:
+        node: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+        masternode: 172.26.131.88
+        nodecount: 3
+
+- hosts: localhost
+  tasks:
+    - name: finalise setup
+      ansible.builtin.script: finalise.sh
+      environment:
         masternode: 172.26.131.88
