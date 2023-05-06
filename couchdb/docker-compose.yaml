@@ -4,6 +4,7 @@ services:
     image: couchdb
     restart: always
     network_mode: "host"
+    container_name: db
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=password
