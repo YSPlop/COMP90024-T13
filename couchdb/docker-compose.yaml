@@ -3,10 +3,9 @@ services:
   couchserver:
     image: couchdb
     restart: always
-    ports:
-      - "5984:5984"
+    network_mode: "host"
     environment:
       - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=pass
+      - COUCHDB_PASSWORD=password
     volumes:
         - ./dbdata:/opt/couchdb/data
