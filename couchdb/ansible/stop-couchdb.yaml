@@ -1,0 +1,10 @@
+---
+- hosts: database
+  tasks:
+    - name: Stop couchdb on all nodes
+      community.docker.docker_compose:
+        project_src: ~/couchdb
+        state: absent
+      environment:
+        node: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+        masternode: 172.26.131.88
