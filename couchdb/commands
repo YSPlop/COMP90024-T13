@@ -1,4 +1,8 @@
 #!/bin/bash
+curl -X POST -H "Content-Type: application/json"\
+    http://admin:password@127.0.0.1:5984/_cluster_setup -d\
+    '{"action": "enable_cluster", "bind_address":"0.0.0.0",\
+     "username": "admin", "password":"password", "node_count":"2"}'
 
 curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup" \
     --header "Content-Type: application/json"\
@@ -12,3 +16,9 @@ curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup"\
     --header "Content-Type: application/json"\
     --data "{\"action\": \"add_node\", \"host\":\"${node}\",\
             \"port\": \"5984\", \"username\": \"${user}\", \"password\":\"${pass}\"}"
+
+curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup"\
+    --header "Content-Type: application/json" --data "{\"action\": \"finish_cluster\"}"
+
+# setup
+curl -X POST -H "Content-Type: application/json" http://admin:password@127.0.0.1:5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"2"}'
