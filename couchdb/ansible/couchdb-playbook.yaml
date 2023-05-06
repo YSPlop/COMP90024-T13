@@ -1,0 +1,11 @@
+---
+- name: Start couchdb on all nodes
+  hosts: database
+  community.docker.docker_compose:
+    project_src: ./
+    state: present
+  environment:
+    node: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+    user: admin
+    password: password
+    masternode: 172.26.131.88
