@@ -1,10 +1,3 @@
-# - name: attach volumes
-#   openstack.cloud.server_volume:
-#     state: present
-#     volume: "{{inventory_hostname}}"
-#     server: "{{inventory_hostname}}"
-#     device: /dev/vdb
-
 - name: create filesystem
   community.general.filesystem:
     dev: /dev/vdb

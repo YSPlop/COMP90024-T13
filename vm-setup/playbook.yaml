@@ -1,0 +1,16 @@
+---
+# - hosts: localhost
+#   vars_files:
+#     - host_vars/mrc.yaml
+#   roles:
+#     - openstack-volume
+
+- hosts: all:!harvester
+  roles:
+    - volumes
+
+- hosts: all
+  roles:
+    - sshkeys
+    - docker
+    - hostnames

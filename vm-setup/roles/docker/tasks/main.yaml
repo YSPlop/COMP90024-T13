@@ -29,6 +29,14 @@
     state: latest
     update_cache: true
 
-- name: Execute the command in remote shell
-  ansible.builtin.script: roles/docker/docker-permissions.sh
+- name: Ensure group "docker" exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Add the user ubuntu to docker group
+  ansible.builtin.user:
+    name: ubuntu
+    groups: docker
+    append: yes
   become: yes
