@@ -9,5 +9,5 @@ services:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=password
       - NODENAME=${node}
-    # volumes:
-    #     - ./dbdata:/opt/couchdb/data
+    volumes:
+        - /mnt/data/dbdata:/opt/couchdb/data
