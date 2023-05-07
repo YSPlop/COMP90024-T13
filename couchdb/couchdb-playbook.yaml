@@ -1,0 +1,49 @@
+---
+- hosts: database
+  tasks:
+    - name: apt install pip
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+      become: yes
+
+    - name: pip install docker
+      ansible.builtin.pip:
+        name: 
+          - docker
+          - docker-compose
+
+    - name: Create couchdb directory
+      ansible.builtin.file:
+        path: ~/couchdb
+        state: directory
+
+    - name: Copy docker-compose file
+      ansible.builtin.copy:
+        src: docker-compose.yaml
+        dest: ~/couchdb/docker-compose.yaml
+        mode: '0644'
+
+    - name: Start couchdb on all nodes
+      community.docker.docker_compose:
+        project_src: ~/couchdb
+        state: present
+      environment:
+        node: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+        masternode: 172.26.131.88
+
+- hosts: database:!db-1
+  tasks:
+    - name: add node to cluster
+      ansible.builtin.script: add-node.sh
+      environment:
+        node: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+        masternode: 172.26.131.88
+        nodecount: 3
+
+- hosts: localhost
+  tasks:
+    - name: finalise setup
+      ansible.builtin.script: finalise.sh
+      environment:
+        masternode: 172.26.131.88

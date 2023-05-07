@@ -6,7 +6,7 @@ all:
     harvester:
       ansible_host: 172.26.135.127
       name: harvester
-    localhost:
+    frontend:
       ansible_connection: local
       name: frontend
   children:
