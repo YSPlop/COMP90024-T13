@@ -10,6 +10,7 @@ def bbox_to_location(bbox):
     Returns:
         subrub (str): Suburb Name
         state (str): State Name
+        lga (str): Local government area
         centrex (float): Centre of bounding box longitude
         centrey (float): Centre of bounding box lattitude
     """
@@ -21,5 +22,6 @@ def bbox_to_location(bbox):
     location_data = rg.search((centrey, centrex))
     suburb = location_data[0]['name']
     state =  location_data[0]['admin1']
+    lga = location_data[0]['admin2']
     
-    return suburb, state, centrex, centrey
+    return suburb, lga, state, centrex, centrey

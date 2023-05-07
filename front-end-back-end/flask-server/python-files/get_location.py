@@ -23,12 +23,13 @@ def bbox_to_location(items,tweet_location_dict):
                 location = location_cache[location_key]
             else:
                 # Perform the reverse geocoding lookup and store the result in the cache
-                location = rg.search((centery, centerx))[0]['name']
+                location = rg.search((centery, centerx))
+                print(location)
                 location_cache[location_key] = location
             tweet_location_dict[id] = location
-            print(location)
+         
 
-        print(tweet_location_dict)    
+    
 
 if __name__ == '__main__':
 
