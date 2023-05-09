@@ -9,6 +9,10 @@
     name: 
       - docker
 
+- name: Install specified python requirements
+  ansible.builtin.pip:
+    requirements: script/requirements.txt
+
 - name: Create harvester directory
   ansible.builtin.file:
     path: ~/harvester

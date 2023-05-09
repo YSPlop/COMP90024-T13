@@ -42,7 +42,7 @@ def text_to_sentiment(sid, text):
     
     return score, category
 
-class Listener(StreamListener, hashtag): 
+class Listener(StreamListener): 
     def __init__(self):
 
         # Initialize sentiment analyzer
@@ -52,7 +52,7 @@ class Listener(StreamListener, hashtag):
         # Connect to CouchDB
         couch = couchdb.Server("http://admin:password@172.26.131.88:5984/")
         self.db = couch["mastodon"]
-        self.hashtag = hashtag
+        self.hashtag = sys.argv[1]
         
     def on_update(self, status):
         self.process_item(status, self.sid, self.db)
@@ -63,7 +63,7 @@ class Listener(StreamListener, hashtag):
             sentiment = text_to_sentiment(sid, text)
                 
             processed_obj = {
-                "hashtag": hashtag,
+                "hashtag": self.hashtag,
                 "text": text,
                 "score": sentiment[0],
                 "category": sentiment[1]
@@ -72,9 +72,7 @@ class Listener(StreamListener, hashtag):
             # Add entry to CouchDB
             db.save(processed_obj)
 
-# get hashtag from command line argument
-hashtag = sys.argv[1]
 # Stream hashtags from mastodon
-listener = Listener(hashtag)
-mastodon.stream_hashtag(hashtag, listener=listener)
+listener = Listener()
+mastodon.stream_hashtag(sys.argv[1], listener=listener)
 
