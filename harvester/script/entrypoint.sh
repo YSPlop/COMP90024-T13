@@ -1,4 +1,4 @@
 #!/bin/bash
 
 . ./secrets.sh
-python3 test.py $1
+python3 harvester.py $1
