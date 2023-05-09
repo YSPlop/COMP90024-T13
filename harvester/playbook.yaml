@@ -1,4 +1,4 @@
-- hosts: frontend
+- hosts: harvester
   vars_files:
     - vars/hashtags.yaml
   roles:

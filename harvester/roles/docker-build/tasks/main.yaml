@@ -9,10 +9,6 @@
     name: 
       - docker
 
-- name: Install specified python requirements
-  ansible.builtin.pip:
-    requirements: script/requirements.txt
-
 - name: Create harvester directory
   ansible.builtin.file:
     path: ~/harvester
@@ -20,9 +16,18 @@
 
 - name: Copy script files
   ansible.builtin.copy:
-    src: script
-    dest: ~/
+    src: script/
+    dest: ~/harvester
     mode: '0644'
+
+- name: Make entrypoint executable
+  ansible.builtin.file:
+    dest: ~/harvester/entrypoint.sh
+    mode: a+x
+
+- name: Install specified python requirements
+  ansible.builtin.pip:
+    requirements: ~/script/requirements.txt
 
 - name: Build the harvester image
   community.docker.docker_image:
