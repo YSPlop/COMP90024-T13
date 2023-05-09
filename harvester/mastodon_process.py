@@ -6,6 +6,7 @@ import os, time
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import couchdb
+import sys
 
 os.environ['MASTODON_ACCESS_TOKEN'] = 'xSuy_p92WUs4Eq7B2g-ps4vUcnjnEBTYjRQ2IbZvCvI'
 access_token = os.environ['MASTODON_ACCESS_TOKEN']
@@ -41,7 +42,7 @@ def text_to_sentiment(sid, text):
     
     return score, category
 
-class Listener(StreamListener): 
+class Listener(StreamListener, hashtag): 
     def __init__(self):
 
         # Initialize sentiment analyzer
@@ -50,28 +51,30 @@ class Listener(StreamListener):
         
         # Connect to CouchDB
         couch = couchdb.Server("http://admin:password@172.26.131.88:5984/")
-        self.db = couch["mastodon-crime"]
+        self.db = couch["mastodon"]
+        self.hashtag = hashtag
         
     def on_update(self, status):
-        process_item(status, self.sid, self.db)
+        self.process_item(status, self.sid, self.db)
 
-def process_item(item, sid, db):
-    if (item['content'] != None) and (item['content'] != "") and (item['language'] == 'en'):
-        text = item['content']
-        sentiment = text_to_sentiment(sid, text)
-            
-        processed_obj = {
-            "text": text,
-            "score": sentiment[0],
-            "category": sentiment[1]
-        }
+    def process_item(self, item, sid, db):
+        if (item['content'] != None) and (item['content'] != "") and (item['language'] == 'en'):
+            text = item['content']
+            sentiment = text_to_sentiment(sid, text)
+                
+            processed_obj = {
+                "hashtag": hashtag,
+                "text": text,
+                "score": sentiment[0],
+                "category": sentiment[1]
+            }
 
-        # Add entry to CouchDB
-        db.save(processed_obj)
-   
+            # Add entry to CouchDB
+            db.save(processed_obj)
 
-listener = Listener()
-
+# get hashtag from command line argument
+hashtag = sys.argv[1]
 # Stream hashtags from mastodon
-mastodon.stream_hashtag('crime', listener=listener)
+listener = Listener(hashtag)
+mastodon.stream_hashtag(hashtag, listener=listener)
 
