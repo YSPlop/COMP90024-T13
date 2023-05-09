@@ -1,5 +1,4 @@
-- hosts: localhost
-  connection: local
+- hosts: frontend
   vars_files:
     - vars/hashtags.yaml
   roles:
