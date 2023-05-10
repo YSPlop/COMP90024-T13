@@ -1,4 +1,4 @@
-
+import * as React from 'react';
 import './App.css'
 import Home from './components/Home'
 //import browser-router (react-router)
