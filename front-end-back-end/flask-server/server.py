@@ -15,8 +15,13 @@ CORS(app)
 
 # Member API route
 @app.route("/members")
+
 def get_members():
     return{"members" : ["Member1", "Member2", "Member3"]}
+
+
+
+
 # Fix Cors Issue, Cross-Origin = * (everyone can access this API)
 if __name__ == "__main__":
     app.run(

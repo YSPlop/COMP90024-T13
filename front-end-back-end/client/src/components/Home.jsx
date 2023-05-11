@@ -4,8 +4,6 @@ import * as React from 'react';
 // import Typography from '@mui/material/Typography';
 // import Link from '@mui/material/Link'
 import { Button } from '@mui/material';
-import {Paper} from '@mui/material';
-import {Container} from '@mui/material';
 
 export default function Home() {
 
@@ -30,34 +28,7 @@ export default function Home() {
       return (
         <>
         <div>
-        <Paper elevation={24} square={true} variant="outlined">
-       
-        <Container fixed> 
-          {/* { {data.map(item => (
-            <React.Fragment key={item.id}>
-              <Card sx={{ minWidth: 500, height: '250px', backgroundColor:'yellow', variant:"outlined" }}>
-                <CardContent>
-                  <Typography sx={{ fontSize: 25 }} color="text.secondary" gutterBottom>
-                    {item}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </React.Fragment>
-          ))} } */}
-
-          <div className = "App">
-              <h3>Iframes in React</h3>
-              <iframe src="http://127.0.0.1:8080/map.html" width = {1000} height = "500"></iframe>
-          </div>
-
-          <div className = "text">
-            <h1>
-              THIS IS A MAP
-            </h1>
-          </div>
-        </Container>
-        </Paper>
-
+        
         <div>
             <Button 
               variant="contained" 
