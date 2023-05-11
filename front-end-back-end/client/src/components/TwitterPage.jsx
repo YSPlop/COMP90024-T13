@@ -1,6 +1,6 @@
 import React from 'react'
 import {Paper, Box, Button, Container, Typography} from '@mui/material'
-import { Styled } from '@mui/system';
+import { styled } from '@mui/system';
 
 //Create custom components, that uses MUI to make DIVS. 
 
@@ -11,6 +11,13 @@ const DivComponent = styled('div')({
 });
 
 function TwitterPage() {
+
+  // const twitter_melbourne_dest = "http://localhost:5173/twitter-melbourne"
+  const twitter_melbourne_dest = "http://127.0.0.1:8080/map.html"
+
+  // You use state whenever you want to change a value of something dynamically with the value change on the website
+  const [iFrameLocation, setiFrameLocation] = React.useState("")
+
   return (
     //Figure out how to use Gap in your buttons to make it accurate. 
     <>
@@ -20,13 +27,14 @@ function TwitterPage() {
 
       <h1>Twitter Page</h1>
       <Box sx={{ flexDirection:'column', marginBottom:'20px'}}>
-        <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {window.location.href = 'http://localhost:5173/TwitterMelbournePage'}}>Melbourne </Button>
-        <Button sx={{marginRight:'10px'}}variant='contained'>Sydney</Button>
+        {/*<Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {window.location.href = twitter_melbourne_dest }}>Melbourne </Button> */}
+        <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_melbourne_dest)}}>Melbourne</Button>
+        <Button sx={{marginRight:'10px'}}variant='contained' >Sydney</Button>
         <Button sx={{marginRight:'10px'}}variant='contained'>Adelaide</Button>
         <Button sx={{marginRight:'10px'}}variant='contained'>Brisbaine</Button>
         <Button sx={{marginRight:'10px'}}variant='contained'>Perth</Button>
        </Box>
-      <Paper elevation={24} square={true} variant="outlined">
+      <Paper square={true} variant="outlined">
         <Container fixed> 
           {/* { {data.map(item => (
             <React.Fragment key={item.id}>
@@ -50,12 +58,13 @@ function TwitterPage() {
 
           <DivComponent>
               <h3>Iframes in React</h3>
-              <iframe src="http://127.0.0.1:8080/map.html" width = {1000} height = "500"></iframe>
+              {/* <iframe src="http://127.0.0.1:8080/map.html" width = {1000} height = "500"></iframe> */}
+              <iframe src= {iFrameLocation} width = {1000} height = "500"></iframe>
           </DivComponent>
 
           <DivComponent>
             <Typography>
-              iasdfougioadfbuioubfgaidobvaibfdivbuiasp
+              hi this is the twitter page
             </Typography>
           </DivComponent>
         </Container>

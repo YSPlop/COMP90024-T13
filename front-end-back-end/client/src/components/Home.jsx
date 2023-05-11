@@ -28,7 +28,6 @@ export default function Home() {
       return (
         <>
         <div>
-        
         <div>
             <Button 
               variant="contained" 
@@ -46,8 +45,6 @@ export default function Home() {
                 Mastadon
             </Button>
         </div>
-
-
         </div>  
         </>
       );
