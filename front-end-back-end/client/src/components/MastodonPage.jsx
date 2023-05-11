@@ -3,7 +3,7 @@ import React from 'react'
 
 //useNavigate 
 // import { useNavigate } from 'react-router-dom'
-// navigate = useNavigate ()
+// navigate = useNavigate (
 function MastodonPage() {
   return (
     <div>
