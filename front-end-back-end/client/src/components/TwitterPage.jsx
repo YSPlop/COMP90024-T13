@@ -1,5 +1,5 @@
 import React from 'react'
-import {Paper, Box, Button, Container, Typography} from '@mui/material'
+import { Paper, Box, Button, Container, Typography } from '@mui/material'
 import { styled } from '@mui/system';
 
 //Create custom components, that uses MUI to make DIVS. 
@@ -24,9 +24,31 @@ function TwitterPage() {
     <>
       <div>
       <Box>
-         
 
+      <Box>
+      <div>
+            <Button sx = {{mr : 2.5}}
+              variant="contained" 
+              onClick={() => {
+                window.location.href = 'http://localhost:5173/Twitter'
+              }}>
+                Twitter
+            </Button>
+
+            
+            
+            <Button 
+              variant="contained" 
+              onClick={() => {
+                window.location.href = 'http://localhost:5173/Mastadon'
+              }}>
+                Mastadon
+            </Button>
+        </div>
+      </Box>
+      
       <h1>Twitter Page</h1>
+
       <Box sx={{ flexDirection:'column', marginBottom:'20px'}}>
         {/*<Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {window.location.href = twitter_melbourne_dest }}>Melbourne </Button> */}
         <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_melbourne_dest)}}>Melbourne</Button>

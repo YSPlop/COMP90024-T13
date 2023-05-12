@@ -23,8 +23,10 @@ export default function Home() {
     //       )
     //   }, [])
 
-      //  you need to run the html server first 
-      // http-server -g ./map.html
+    //  you need to run the html server first 
+    // http-server -g ./map.html
+
+
       return (
         <>
         <div>
