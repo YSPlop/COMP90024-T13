@@ -1,5 +1,8 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
+import couchdb
+import ijson
+
 
 app = Flask(__name__)
 CORS(app)
@@ -11,16 +14,36 @@ CORS(app)
 
 # display graph on web page
 
-# 
+# COMP90024-T13/front-end-back-end/flask-server/python-files/couchdb_view.py
+# Everytime i do database.view the data gets refreshed.
+
+# database view and return a number to front end
+@app.route("/mastadon_server_count")
+def get_mastadon_server_count():
+    
+    server = couchdb.Server('http://admin:password@172.26.131.88:5984')
+    
+    # Connect to mastodon db
+    db_mastodon = server['mastodon']
+
+    # Query all data from mastodon db
+    view_mastodon = db_mastodon.view('_all_docs', stale = 'ok', include_docs = True)
+    
+    # Count the number of data
+    count = len(view_mastodon)
+    
+    print("count is ", count)
+    
+    # return the number of data
+    return jsonify(count)
+
 
 # Member API route
 @app.route("/members")
-
 def get_members():
     # return{"members" : ["Member1", "Member2", "Member3"]}
     list_i_want = ["lol", "lol2", "lol3"]
     temp = jsonify(list_i_want)
-    print(temp)
     return temp
 
 
@@ -28,5 +51,6 @@ def get_members():
 # Fix Cors Issue, Cross-Origin = * (everyone can access this API)
 if __name__ == "__main__":
     app.run(
-        debug=True
+        port=5100,
+        debug=True,
     )

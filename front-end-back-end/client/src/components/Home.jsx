@@ -1,9 +1,6 @@
 import * as React from 'react';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import Typography from '@mui/material/Typography';
-// import Link from '@mui/material/Link'
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import { Navigate } from 'react-router-dom';
 
 export default function Home() {
 
@@ -25,6 +22,17 @@ export default function Home() {
 
     //  you need to run the html server first 
     // http-server -g ./map.html
+    // http-server -p 1000 -g ./map.html
+
+    const [goToTwitter, setGoToTwitter] = React.useState(false);
+    const [goToMastadon, setGoToMastadon] = React.useState(false);
+
+    if (goToTwitter){
+      return <Navigate to="/Twitter"/>;
+    }
+    if (goToMastadon){
+      return <Navigate to="/Mastadon"/>;
+    }
 
 
       return (
@@ -32,17 +40,22 @@ export default function Home() {
         <div>
         <div>
             <Button 
+              sx = {{mr : 2.5}}
               variant="contained" 
+              size="large"
               onClick={() => {
-                window.location.href = 'http://localhost:5173/Twitter'
+                setGoToTwitter(true)
               }}>
-                Twitter
+                <Typography>
+                  Twitter
+                </Typography>
             </Button>
             
             <Button 
-              variant="contained" 
+              variant="contained"
+              size="large" 
               onClick={() => {
-                window.location.href = 'http://localhost:5173/Mastadon'
+                setGoToMastadon(true)
               }}>
                 Mastadon
             </Button>
