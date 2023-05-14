@@ -2,7 +2,7 @@
 
 ## Installation commands
 ```
-npm install -g npm
+sudo apt install npm
 
 npm install http-server
 
