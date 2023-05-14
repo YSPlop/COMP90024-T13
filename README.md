@@ -1,5 +1,42 @@
 # COMP90024-T13
 
+## Installation commands
+```
+npm install -g npm
+
+npm install http-server
+
+npm i react
+
+npm i react-dom
+
+npm install @mui/material @emotion/react @emotion/styled
+```
+
+## Running the application
+
+### Front end
+
+```sh
+cd front-end-back-end/client
+npm run dev
+```
+
+### Back end
+
+```sh
+cd front-end-back-end/flask-server/
+python3 server.py
+```
+
+### Individual servers
+   
+```sh
+cd front-end-back-end/client/src/components/
+http-server -p <port-number> -g <html-name.html>
+```
+
+
 ## Structure of files
 ```bash
 ansible-scripts
