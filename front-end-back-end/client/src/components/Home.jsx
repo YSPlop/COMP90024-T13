@@ -1,67 +1,66 @@
 import * as React from 'react';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import Typography from '@mui/material/Typography';
-// import HTMLFile from './map.html?raw'
-// import Link from '@mui/material/Link'
-import Paper from '@mui/material/Paper';
-
-// import container from mumaterials
-import Container from '@mui/material/Container';
-
+import { Button, Typography } from '@mui/material';
+import { Navigate } from 'react-router-dom';
 
 export default function Home() {
 
-    const [data, setData] = React.useState([])
+    // const [data, setData] = React.useState([])
 
-    React.useEffect(() => {
-        fetch("http://127.0.0.1:5000/members")
-          .then(res => res.json())
-          .then(
-            (result) => {
-                console.log('result', result.members)
-                setData(result.members);
-            },
-            (error) => {
-              console.log(error)
-            }
-          )
-      }, [])
+    // React.useEffect(() => {
+    //     fetch("http://127.0.0.1:5000/members")
+    //       .then(res => res.json())
+    //       .then(
+    //         (result) => {
+    //             console.log('result', result.members)
+    //             setData(result.members);
+    //         },
+    //         (error) => {
+    //           console.log(error)
+    //         }
+    //       )
+    //   }, [])
 
-      //  you need to run the html server first 
-      // http-server -g ./map.html
+    //  you need to run the html server first 
+    // http-server -g ./map.html
+    // http-server -p 1000 -g ./map.html
+
+    const [goToTwitter, setGoToTwitter] = React.useState(false);
+    const [goToMastadon, setGoToMastadon] = React.useState(false);
+
+    if (goToTwitter){
+      return <Navigate to="/Twitter"/>;
+    }
+    if (goToMastadon){
+      return <Navigate to="/Mastadon"/>;
+    }
+
+
       return (
         <>
-        <Paper elevation={24} square="true" variant="outlined">
-       
-        <Container fixed> 
-          {/* {data.map(item => (
-            <React.Fragment key={item.id}>
-              <Card sx={{ minWidth: 500, height: '250px', backgroundColor:'yellow', variant:"outlined" }}>
-                <CardContent>
-                  <Typography sx={{ fontSize: 25 }} color="text.secondary" gutterBottom>
-                    {item}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </React.Fragment>
-          ))} */}
-
-          <div className="App">
-              <h3>Iframes in React</h3>
-              <iframe src="http://100.95.194.150:8080/map.html" width = {1000} height = "500"></iframe>
-          </div>
-
-          <div className = "text">
-            <h1>
-              THIS IS A MAP
-            </h1>
-          </div>
-
-          
-          
-        </Container>
-        </Paper>  
+        <div>
+        <div>
+            <Button 
+              sx = {{mr : 2.5}}
+              variant="contained" 
+              size="large"
+              onClick={() => {
+                setGoToTwitter(true)
+              }}>
+                <Typography>
+                  Twitter
+                </Typography>
+            </Button>
+            
+            <Button 
+              variant="contained"
+              size="large" 
+              onClick={() => {
+                setGoToMastadon(true)
+              }}>
+                Mastadon
+            </Button>
+        </div>
+        </div>  
         </>
       );
 }
