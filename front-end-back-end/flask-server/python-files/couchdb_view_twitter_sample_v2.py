@@ -4,7 +4,7 @@
 import json, couchdb
 
 server = couchdb.Server('http://admin:password@172.26.131.88:5984')
-db = server['twitter-test']
+db = server['twitter']
 
 view = '_design/location/_view/location'
 
