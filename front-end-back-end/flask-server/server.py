@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import couchdb
 import ijson
+import random
 
 
 app = Flask(__name__)
@@ -31,11 +32,11 @@ def get_mastadon_server_count():
     
     # Count the number of data
     count = len(view_mastodon)
-    
-    print("count is ", count)
+    temp = count + random.randrange(1,100)
+    print("count is ", temp)
     
     # return the number of data
-    return jsonify(count)
+    return jsonify(temp)
 
 
 # Member API route
