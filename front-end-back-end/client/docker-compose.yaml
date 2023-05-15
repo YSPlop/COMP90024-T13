@@ -1,6 +1,6 @@
 services:
-  couchserver:
+  frontend:
     build: ./
-    restart: always
+    restart: "always"
     network_mode: "host"
     container_name: frontend
