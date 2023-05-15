@@ -1,4 +1,5 @@
-import { Typography, Box, Button, Menu, MenuItem } from '@mui/material'
+import { Typography, Box, Button, Menu, MenuItem, Paper, Container, } from '@mui/material'
+import { styled } from '@mui/system';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { Navigate } from 'react-router-dom'
 import React from 'react'
@@ -6,6 +7,13 @@ import React from 'react'
 // Learn how to do refresh 
 // live count of Mastadon data, total tweets
 // pick a category and show how many of those tweets
+
+//Create custom components, that uses MUI to make DIVS. 
+const DivComponent = styled('div')({
+  color: 'darkslategray',
+  backgroundColor: 'aliceblue',
+  padding: 8,
+});
 
 function displayCount(couchdbCount){
   console.log(couchdbCount);
@@ -17,18 +25,25 @@ function displayCount(couchdbCount){
   }
 }
 
+function displayGraph(currentHashTag){
+}
+
 function MastodonPage() {
+
+  const backendIP = "127.0.0.1";
+  const backendPortNumber = "5100";
+
   // constant update values
   const [hashTagList, setHashTagList] = React.useState()
-  const [couchdbCount, setCouchDBCount] = React.useState([])
+  const [couchdbCount, setCouchDBCount] = React.useState()
+  const [currentHashTag, setCurrentHashTag] = React.useState()
 
   // Navigation states
   const [goToTwitter, setGoToTwitter] = React.useState(false);
   const [goToHome, setGoToHome] = React.useState(false);
 
-  const portNumberForServer = 5100;
-  const memberServerIP = "http://127.0.0.1:"+ portNumberForServer + "/members"
-  const couchdbCountIP = "http://127.0.0.1:"+ portNumberForServer + "/mastadon_server_count"
+  const memberServerIP = "http://" + backendIP + ":" + backendPortNumber + "/members"
+  const couchdbCountIP = "http://" + backendIP + ":"+ backendPortNumber + "/mastadon_server_count"
 
   // Set Member names from backend
   React.useEffect(() => {
@@ -118,7 +133,7 @@ function MastodonPage() {
                     ) : (
                       hashTagList && hashTagList.length > 0 ? (
                         hashTagList.map((member, index) => (
-                          <MenuItem key={index} value={member}>
+                          <MenuItem key={index} value={member} onClick={()=> {setCurrentHashTag(member)}}>
                             {member}
                           </MenuItem>
                       ))) : (
@@ -135,17 +150,21 @@ function MastodonPage() {
       {/* Heading with member list from backend */}
       <Box>
         <Typography variant="h1">Mastodon Page</Typography>
+          <Paper square={true} variant="outlined">
+            <Container fixed> 
+              <DivComponent>
+                  <Typography variant="h2">{currentHashTag}</Typography>
+                      {displayGraph(currentHashTag)}
+              </DivComponent>
+
+              <DivComponent>
+                <Typography>
+                  hi this is the twitter page
+                </Typography>
+              </DivComponent>
+            </Container>
+          </Paper>
           
-          {/* Going through the list to print each member */}
-          {typeof hashTagList === 'undefined' ? (
-            <p>Loading...</p>
-          ) : (
-            hashTagList && hashTagList.length > 0 ? (
-              hashTagList.map((member, i) => <p key={i}>{member}</p>)
-            ) : (
-              <p>No data available</p>
-            )
-          )}
       </Box>
 
       
