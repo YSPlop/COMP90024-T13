@@ -18,6 +18,10 @@ function displayCount(couchdbCount){
 }
 
 function MastodonPage() {
+
+  const backendIP = "127.0.0.1";
+  const backendPortNumber = "5100";
+
   // constant update values
   const [hashTagList, setHashTagList] = React.useState()
   const [couchdbCount, setCouchDBCount] = React.useState([])
@@ -26,9 +30,8 @@ function MastodonPage() {
   const [goToTwitter, setGoToTwitter] = React.useState(false);
   const [goToHome, setGoToHome] = React.useState(false);
 
-  const portNumberForServer = 5100;
-  const memberServerIP = "http://127.0.0.1:"+ portNumberForServer + "/members"
-  const couchdbCountIP = "http://127.0.0.1:"+ portNumberForServer + "/mastadon_server_count"
+  const memberServerIP = "http://" + backendIP + ":" + backendPortNumber + "/members"
+  const couchdbCountIP = "http://" + backendIP + ":"+ backendPortNumber + "/mastadon_server_count"
 
   // Set Member names from backend
   React.useEffect(() => {

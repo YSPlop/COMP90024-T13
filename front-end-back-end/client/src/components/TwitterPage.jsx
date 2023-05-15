@@ -4,13 +4,6 @@ import { styled } from '@mui/system';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { Navigate } from 'react-router-dom';
 
-// imports for images
-import melbourneImage from "../assets/Melbourne.png"
-import sydneyImage from "../assets/Sydney.png"
-import adelaideImage from "../assets/Adelaide.png"
-import brisbaneImage from "../assets/Brisbaine.png"
-import perthImage from "../assets/Perth.png"
-
 //Create custom components, that uses MUI to make DIVS. 
 const DivComponent = styled('div')({
   color: 'darkslategray',
@@ -19,33 +12,46 @@ const DivComponent = styled('div')({
 });
 
 // Depnding on whether graph or statistics is required, display required information
-function maybeMap(displayGraph, iFrameLocation, stateName){
-    if (displayGraph == true){
-      
-        return <iframe src= {iFrameLocation} width = {1000} height = "500"></iframe>
+function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber){
 
-    }else{ 
-      if (stateName == "Melbourne"){
-        return <img src={melbourneImage} alt="lol" width = {1000} height = "500"></img>
-      }else if (stateName == "Sydney"){
-        return <img src={sydneyImage} alt="lol" width = {1000} height = "500"></img>
-      }else if (stateName == "Adelaide"){
-        return <img src={adelaideImage} alt="lol" width = {1000} height = "500"></img>
-      }else if (stateName == "Brisbaine"){
-        return <img src={brisbaneImage} alt="lol" width = {1000} height = "500"></img>
-      }else if (stateName == "Perth"){
-        return <img src={perthImage} alt="lol" width = {1000} height = "500"></img>
-      }else{
-        return "Invalid button"
-      }
+
+  // image locations on server
+  const melbourneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Melbourne.png";
+  const sydneyDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Sydney.png"
+  const adelaideDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Adelaide.png"
+  const brisbaneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Brisbaine.png"
+  const perthDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Perth.png"
+
+
+  if (displayGraph == true){
+    
+      return <iframe src= {iFrameLocation} width = {1000} height = "500"></iframe>
+
+  }else{ 
+    if (stateName == "Melbourne"){
+      return <img src={melbourneDemographicURL} alt="MelbourneDemographic" width = {1000} height = "500"></img>
+    }else if (stateName == "Sydney"){
+      return <img src={sydneyDemographicURL} alt="SydneyDemographic" width = {1000} height = "500"></img>
+    }else if (stateName == "Adelaide"){
+      return <img src={adelaideDemographicURL} alt="AdelaideDemographic" width = {1000} height = "500"></img>
+    }else if (stateName == "Brisbaine"){
+      return <img src={brisbaneDemographicURL} alt="BrisbaineDemographic" width = {1000} height = "500"></img>
+    }else if (stateName == "Perth"){
+      return <img src={perthDemographicURL} alt="PerthDemographic" width = {1000} height = "500"></img>
+    }else{
+      return "Invalid button"
+    }
   }
 }
 
 
 function TwitterPage() {
 
+  const httpIP = "127.0.0.1"
+  const httpPortNumber = "1000"
+
   const twitter_default = "https://en.wikipedia.org/wiki/HI"
-  const twitter_melbourne_dest = "http://127.0.0.1:1000/map.html"
+  const twitter_melbourne_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/melbourne-map.html"
   const twitter_sydney_dest = "https://en.wikipedia.org/wiki/Apache_CouchDB"
   const twitter_adelaide_dest = "https://en.wikipedia.org/wiki/React_(software)"
   const twitter_brisbane_dest = "https://en.wikipedia.org/wiki/Ansible"
@@ -131,7 +137,7 @@ function TwitterPage() {
             <Container fixed> 
               <DivComponent>
                   <Typography variant="h2">{stateName}</Typography>
-                      {maybeMap(displayGraph, iFrameLocation, stateName)}
+                      {maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber)}
               </DivComponent>
 
               <DivComponent>
