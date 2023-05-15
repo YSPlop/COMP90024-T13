@@ -3,10 +3,16 @@ from flask_cors import CORS
 import couchdb
 import ijson
 import random
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 
 app = Flask(__name__)
-CORS(app)
+
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
+
+#CORS(app)
 
 
 # Set port number as 5000 for the front end and back end
@@ -52,7 +58,6 @@ def get_members():
 # Fix Cors Issue, Cross-Origin = * (everyone can access this API)
 if __name__ == "__main__":
     app.run(
-        host='0.0.0.0',
         port=5100,
         debug=True,
     )

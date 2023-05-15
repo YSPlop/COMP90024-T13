@@ -1,6 +1,12 @@
 services:
-  couchserver:
-    build: ./
-    restart: "always"
-    network_mode: "host"
-    container_name: backend
+  web:
+    build: ./services/web
+    command: gunicorn --bind 0.0.0.0:5000 server:app
+    expose:
+      - 5000
+  nginx:
+    build: ./services/nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
