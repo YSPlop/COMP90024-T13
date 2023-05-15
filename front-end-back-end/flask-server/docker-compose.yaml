@@ -1,3 +1,4 @@
+#https://testdriven.io/blog/dockerizing-flask-with-postgres-gunicorn-and-nginx/
 services:
   web:
     build: ./services/web
