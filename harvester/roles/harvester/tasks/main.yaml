@@ -27,6 +27,7 @@
     image: harvester
     command: "{{item}}"
     container_default_behavior: no_defaults
+    restart_policy: "always"
   loop: "{{hashtags}}"
 
 # stop containers here
