@@ -1,0 +1,30 @@
+---
+- hosts: backend
+  tasks:
+    - name: apt install pip
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+      become: yes
+
+    - name: pip install docker
+      ansible.builtin.pip:
+        name: 
+          - docker
+          - docker-compose
+
+    - name: Create backend directory
+      ansible.builtin.file:
+        path: ~/backend
+        state: directory
+
+    - name: Copy script files
+      ansible.builtin.copy:
+        src: ./
+        dest: ~/backend/
+        mode: '0644'
+
+    - name: Start backend
+      community.docker.docker_compose:
+        project_src: ~/backend
+        state: present

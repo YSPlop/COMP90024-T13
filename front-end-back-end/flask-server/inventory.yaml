@@ -1,0 +1,25 @@
+all:
+  hosts:
+    backend:
+      ansible_host: 172.26.135.101
+      name: backend
+    harvester:
+      ansible_host: 172.26.135.127
+      name: harvester
+    frontend:
+      ansible_connection: local
+      name: frontend
+  children:
+    database:
+      hosts:
+        db-1:
+          ansible_host: 172.26.131.88
+          name: db-1
+        db-2:
+          ansible_host: 172.26.134.94
+          name: db-2
+        db-3:
+          ansible_host: 172.26.134.106
+          name: db-3
+  vars:
+    ansible_ssh_private_key_file: ~/accesskey.pem

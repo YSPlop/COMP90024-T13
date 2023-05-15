@@ -1,0 +1,6 @@
+services:
+  couchserver:
+    build: ./
+    restart: "always"
+    network_mode: "host"
+    container_name: backend

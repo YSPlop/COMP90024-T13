@@ -52,6 +52,7 @@ def get_members():
 # Fix Cors Issue, Cross-Origin = * (everyone can access this API)
 if __name__ == "__main__":
     app.run(
+        host='0.0.0.0',
         port=5100,
         debug=True,
     )
