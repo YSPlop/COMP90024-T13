@@ -1,7 +1,8 @@
 # COMP90024-T13
 
 ## Installation commands
-```
+
+```sh
 sudo apt install npm
 
 npm install http-server
@@ -30,14 +31,14 @@ python3 server.py
 ```
 
 ### Individual servers
-   
+
 ```sh
 cd front-end-back-end/client/src/components/
 http-server -p <port-number> -g <html-name.html>
 ```
 
-
 ## Structure of files
+
 ```bash
 ansible-scripts
    |-- inventory.yaml

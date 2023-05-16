@@ -15,6 +15,7 @@ const DivComponent = styled('div')({
   padding: 8,
 });
 
+// Display the count if count is available
 function displayCount(couchdbCount){
   console.log(couchdbCount);
   console.log(couchdbCount);
@@ -25,6 +26,7 @@ function displayCount(couchdbCount){
   }
 }
 
+// Depending on the set currentHashTag display the right picture
 function displayGraph(currentHashTag){
 }
 
@@ -57,33 +59,32 @@ function MastodonPage() {
               setHashTagList(result);
           },
           (error) => {
-            
             console.log(error)
           }
 
         )
     }, []);
 
-    // Every 1000ms (1s) mastadon data is fetched from couchdb to be represented in the front end
-    React.useEffect(() => {
-      const interval = setInterval(() => {
-        fetch(couchdbCountIP)
-          .then(res => res.json())
-          .then(
-            (result) => {
-                console.log('result', result)
-                setCouchDBCount(result);
-            },
-            (error) => {
-              console.log(error)
-            }
-          )
-        }, 1000);
-        return () => clearInterval(interval);
-    });
+  // Every 1000ms (1s) mastadon data is fetched from couchdb to be represented in the front end
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      fetch(couchdbCountIP)
+        .then(res => res.json())
+        .then(
+          (result) => {
+              console.log('result', result)
+              setCouchDBCount(result);
+          },
+          (error) => {
+            console.log(error)
+          }
+        )
+      }, 1000);
+      return () => clearInterval(interval);
+  });
 
   
-
+  // Navigation control
   if (goToTwitter){
     return <Navigate to="/Twitter" />;
   }else if (goToHome){
@@ -147,7 +148,7 @@ function MastodonPage() {
         </PopupState>
       </Box>
       
-      {/* Heading with member list from backend */}
+      {/* Heading with picture for the hash tag clicked */}
       <Box>
         <Typography variant="h1">Mastodon Page</Typography>
           <Paper square={true} variant="outlined">
