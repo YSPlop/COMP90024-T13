@@ -3,7 +3,6 @@ import { styled } from '@mui/system';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { Navigate } from 'react-router-dom'
 import React from 'react'
-import axios from 'axios';
 
 // Learn how to do refresh 
 // live count of Mastadon data, total tweets
@@ -18,17 +17,17 @@ const DivComponent = styled('div')({
 
 // Display the count if count is available
 function displayCount(couchdbCount){
-  if (couchdbCount != 'undefined'){
+  if (couchdbCount != 0){
     return <Typography variant="h3"> couchdbcount: {couchdbCount} </Typography>
   }else{
-    return <Typography variant="h3"> Loading... </Typography>
+    return <Typography variant="h3"> couch DB count Loading... </Typography>
   }
 }
 
 // Depending on the set currentHashTag display the right picture
 /*
   currentHashTag: the same name should be used for hash tag demographic png
- */
+*/
 function displayGraph(currentHashTag, httpIP, httpPortNumber){
 
   // image locations on server 
@@ -41,10 +40,10 @@ function displayGraph(currentHashTag, httpIP, httpPortNumber){
 
 function MastodonPage() {
 
-  const backendIP = "10.12.142.13";
+  const backendIP = "100.95.194.150";
   const backendPortNumber = "5100";
 
-  const httpIP = "10.12.142.13";
+  const httpIP = "100.95.194.150";
   const httpPortNumber = "1000";
 
   // BackEnd IP addresses
@@ -55,7 +54,7 @@ function MastodonPage() {
 
   // constant update values
   const [hashTagList, setHashTagList] = React.useState()
-  const [couchdbCount, setCouchDBCount] = React.useState()
+  const [couchdbCount, setCouchDBCount] = React.useState(0)
   const [currentHashTag, setCurrentHashTag] = React.useState("first")
   const [randomNumber, setRandomNumber] = React.useState(0)
 
@@ -72,7 +71,7 @@ function MastodonPage() {
         .then(res => res.json())
         .then(
           (result) => {
-              console.log('result', result)
+              console.log('member result', result)
               setHashTagList(result);
           },
           (error) => {
@@ -82,37 +81,46 @@ function MastodonPage() {
         )
     }, []);
 
-  // Every 1000ms (1s) mastadon data is fetched from couchdb to be represented in the front end
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      fetch(couchdbCountIP)
+      
+    const callCouchDB = async() => {
+      await fetch(couchdbCountIP)
         .then(res => res.json())
         .then(
           (result) => {
-              console.log('result', result)
+              console.log('couchDB count', result)
               setCouchDBCount(result);
           },
           (error) => {
             console.log(error)
           }
         )
-      }, 1000);
-      return () => clearInterval(interval);
-  });
+    }
+    
+    callCouchDB().catch(console.error);
 
-  function getRandomNumber(){
-    fetch(randomNumIP)
+  })
+
+  // // Every 1000ms (1s) mastadon data is fetched from couchdb to be represented in the front end
+  // React.useEffect( () => {
+  //   const interval =  setInterval(async () => {
+  //     await callCouchDB();
+  //     }, 1000);
+  //     return () => clearInterval(interval);
+  // }, []);
+ 
+  async function getRandomNumber(){
+    await fetch(randomNumIP)
       .then()
       .then(res => res.json())
       .then(
         (result) => {
-            console.log('result', result)
+            console.log('Random Number', result)
             setRandomNumber(result);
         },
         (error) => {
           console.log(error)
         }
-
       )
   }
 

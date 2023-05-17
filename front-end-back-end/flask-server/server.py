@@ -32,11 +32,11 @@ def get_mastadon_server_count():
     
     # Count the number of data
     count = len(view_mastodon)
-    temp = count + random.randrange(1,100)
-    print("count is ", temp)
+    # temp = count + random.randrange(1,100)
+    print("count is ", count)
     
     # return the number of data
-    return jsonify(temp)
+    return jsonify(count)
 
 
 # Member API route
@@ -54,7 +54,7 @@ def get_random_number():
 # (everyone can access this API)
 if __name__ == "__main__":
     app.run(
-        host='0.0.0.0',
+        host='100.95.194.150',
         port=5100,
         debug=True,
     )
