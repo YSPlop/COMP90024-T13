@@ -47,7 +47,7 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
 
 function TwitterPage() {
 
-  const httpIP = "127.0.0.1"
+  const httpIP = "10.12.142.13"
   const httpPortNumber = "1000"
 
   const twitter_default = "https://en.wikipedia.org/wiki/HI"

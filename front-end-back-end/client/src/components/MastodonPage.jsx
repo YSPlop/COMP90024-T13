@@ -27,13 +27,26 @@ function displayCount(couchdbCount){
 }
 
 // Depending on the set currentHashTag display the right picture
-function displayGraph(currentHashTag){
+/*
+  currentHashTag: the same name should be used for hash tag demographic png
+ */
+function displayGraph(currentHashTag, httpIP, httpPortNumber){
+
+  // image locations on server 
+  // you add the date at the end to make the URL unique everytime you click it so it forced a refresh for the picture
+  const destinationURL = "http://" + httpIP + ":" + httpPortNumber + "/hashTagGraphs/" + currentHashTag + ".png" + "?" + new Date();
+
+  return <img src={destinationURL} alt="hashtag_Demographic" width = {1000} height = "500"></img>
+
 }
 
 function MastodonPage() {
 
-  const backendIP = "127.0.0.1";
+  const backendIP = "10.12.142.13";
   const backendPortNumber = "5100";
+
+  const httpIP = "10.12.142.13";
+  const httpPortNumber = "1000";
 
   // constant update values
   const [hashTagList, setHashTagList] = React.useState()
@@ -125,9 +138,13 @@ function MastodonPage() {
         <PopupState variant="popover" popupId="demo-popup-menu">
             {(popupState) => (
               <React.Fragment>
+
+                {/* The drop down main button */}
                 <Button style={{maxHeight: '40px'}} variant="contained" onClick={() => {window.location.reload(true)}}{...bindTrigger(popupState)}>
                   Presentation Type
                 </Button>
+
+                {/* The drop down menu */}
                 <Menu {...bindMenu(popupState)}>
                   {typeof hashTagList === 'undefined' ? (
                       <MenuItem>Loading </MenuItem>
@@ -143,30 +160,28 @@ function MastodonPage() {
                     )
                   }
                 </Menu>
+
               </React.Fragment>
             )}
         </PopupState>
       </Box>
       
       {/* Heading with picture for the hash tag clicked */}
-      <Box>
+      <Box key={currentHashTag}>
         <Typography variant="h1">Mastodon Page</Typography>
           <Paper square={true} variant="outlined">
             <Container fixed> 
               <DivComponent>
-                  <Typography variant="h2">{currentHashTag}</Typography>
-                      {displayGraph(currentHashTag)}
-              </DivComponent>
-
-              <DivComponent>
-                <Typography>
-                  hi this is the twitter page
-                </Typography>
+                  
+                    <Typography variant="h2">{currentHashTag}</Typography>
+                    {displayGraph(currentHashTag, httpIP, httpPortNumber)}
+                  
               </DivComponent>
             </Container>
           </Paper>
           
       </Box>
+
 
       
 

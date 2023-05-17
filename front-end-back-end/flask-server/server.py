@@ -47,9 +47,7 @@ def get_members():
     temp = jsonify(list_i_want)
     return temp
 
-
-
-# Fix Cors Issue, Cross-Origin = * (everyone can access this API)
+# (everyone can access this API)
 if __name__ == "__main__":
     app.run(
         host='0.0.0.0',
