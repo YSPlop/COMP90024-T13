@@ -12,6 +12,8 @@ npm i react
 npm i react-dom
 
 npm install @mui/material @emotion/react @emotion/styled
+
+npm install axios
 ```
 
 ## Running the application

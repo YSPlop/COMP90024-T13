@@ -47,6 +47,10 @@ def get_members():
     temp = jsonify(list_i_want)
     return temp
 
+@app.route("/random_number")
+def get_random_number():
+    return jsonify(random.randrange(1,100))
+
 # (everyone can access this API)
 if __name__ == "__main__":
     app.run(

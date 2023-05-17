@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { Navigate } from 'react-router-dom'
 import React from 'react'
+import axios from 'axios';
 
 // Learn how to do refresh 
 // live count of Mastadon data, total tweets
@@ -17,12 +18,10 @@ const DivComponent = styled('div')({
 
 // Display the count if count is available
 function displayCount(couchdbCount){
-  console.log(couchdbCount);
-  console.log(couchdbCount);
   if (couchdbCount != 'undefined'){
-    return <Typography variant="h1"> {couchdbCount} </Typography>
+    return <Typography variant="h3"> couchdbcount: {couchdbCount} </Typography>
   }else{
-    return <Typography variant="h1"> Loading... </Typography>
+    return <Typography variant="h3"> Loading... </Typography>
   }
 }
 
@@ -48,18 +47,23 @@ function MastodonPage() {
   const httpIP = "10.12.142.13";
   const httpPortNumber = "1000";
 
+  // BackEnd IP addresses
+  const memberServerIP = "http://" + backendIP + ":" + backendPortNumber + "/members"
+  const couchdbCountIP = "http://" + backendIP + ":"+ backendPortNumber + "/mastadon_server_count"
+  const randomNumIP = "http://" + backendIP + ":"+ backendPortNumber + "/random_number"
+  
+
   // constant update values
   const [hashTagList, setHashTagList] = React.useState()
   const [couchdbCount, setCouchDBCount] = React.useState()
-  const [currentHashTag, setCurrentHashTag] = React.useState()
+  const [currentHashTag, setCurrentHashTag] = React.useState("first")
+  const [randomNumber, setRandomNumber] = React.useState(0)
 
   // Navigation states
   const [goToTwitter, setGoToTwitter] = React.useState(false);
   const [goToHome, setGoToHome] = React.useState(false);
-
-  const memberServerIP = "http://" + backendIP + ":" + backendPortNumber + "/members"
-  const couchdbCountIP = "http://" + backendIP + ":"+ backendPortNumber + "/mastadon_server_count"
-
+  
+  // Use effects
   // Set Member names from backend
   React.useEffect(() => {
      
@@ -96,6 +100,42 @@ function MastodonPage() {
       return () => clearInterval(interval);
   });
 
+  function getRandomNumber(){
+    fetch(randomNumIP)
+      .then()
+      .then(res => res.json())
+      .then(
+        (result) => {
+            console.log('result', result)
+            setRandomNumber(result);
+        },
+        (error) => {
+          console.log(error)
+        }
+
+      )
+  }
+
+  // Set random number from backend
+  // React.useEffect(() => {
+     
+  //   fetch(randomNumIP)
+  //     .then()
+  //     .then(res => res.json())
+  //     .then(
+  //       (result) => {
+  //           console.log('result', result)
+  //           setRandomNumber(result);
+  //       },
+  //       (error) => {
+  //         console.log(error)
+  //       }
+
+  //     )
+  // },[randomNumIP]);
+
+  
+
   
   // Navigation control
   if (goToTwitter){
@@ -127,9 +167,27 @@ function MastodonPage() {
             </Button>
         </div>
       </Box>
+
+      {/* Heading */}
+      <Typography variant="h1">Mastodon Page</Typography>
+
+      {/* Random number */}
+      <Box sx = {{mb: 7.5}}>
+        
+        
+          <Button 
+            variant="contained" 
+            onClick={() => {
+              {getRandomNumber()}
+            }}>
+              Random Number Button
+          </Button>
+
+        <Typography variant="h3">Random Number: {randomNumber}</Typography>
+      </Box>
       
       {/* Dynamic CouchDB count */}
-      <Box>
+      <Box sx = {{mb: 7.5}}>
         {displayCount(couchdbCount)}
       </Box>
 
@@ -151,7 +209,7 @@ function MastodonPage() {
                     ) : (
                       hashTagList && hashTagList.length > 0 ? (
                         hashTagList.map((member, index) => (
-                          <MenuItem key={index} value={member} onClick={()=> {setCurrentHashTag(member)}}>
+                          <MenuItem key={index} value={member} onClick={()=> {setCurrentHashTag(member); getRandomNumber();}}>
                             {member}
                           </MenuItem>
                       ))) : (
@@ -167,8 +225,7 @@ function MastodonPage() {
       </Box>
       
       {/* Heading with picture for the hash tag clicked */}
-      <Box key={currentHashTag}>
-        <Typography variant="h1">Mastodon Page</Typography>
+      <Box key={currentHashTag}>        
           <Paper square={true} variant="outlined">
             <Container fixed> 
               <DivComponent>
