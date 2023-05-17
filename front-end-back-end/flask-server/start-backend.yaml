@@ -28,3 +28,4 @@
       community.docker.docker_compose:
         project_src: ~/backend
         state: present
+        build: true

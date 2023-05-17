@@ -12,7 +12,7 @@ app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
 
-#CORS(app)
+CORS(app)
 
 
 # Set port number as 5000 for the front end and back end
@@ -58,6 +58,6 @@ def get_members():
 # Fix Cors Issue, Cross-Origin = * (everyone can access this API)
 if __name__ == "__main__":
     app.run(
-        port=5100,
+        port=5000,
         debug=True,
     )
