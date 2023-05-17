@@ -11,3 +11,9 @@ services:
       - 80:80
     depends_on:
       - web
+  assets:
+    build: ./services/assets
+    ports:
+      - 8081:8081
+    volumes:
+      - ./assets:/app
