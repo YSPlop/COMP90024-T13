@@ -30,8 +30,8 @@ function displayGraph(currentHashTag){
 
 function MastodonPage() {
 
-  const backendIP = "127.0.0.1";
-  const backendPortNumber = "5100";
+  const backendIP = "172.26.135.101";
+  const backendPortNumber = "80";
 
   // constant update values
   const [hashTagList, setHashTagList] = React.useState()

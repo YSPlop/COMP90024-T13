@@ -47,8 +47,8 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
 
 function TwitterPage() {
 
-  const httpIP = "127.0.0.1"
-  const httpPortNumber = "1000"
+  const httpIP = "172.26.135.101"
+  const httpPortNumber = "8081"
 
   const twitter_default = "https://en.wikipedia.org/wiki/HI"
   const twitter_melbourne_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/melbourne-map.html"
