@@ -1,6 +1,7 @@
 ---
 - hosts: backend
-  - name: Stop backend
-    community.docker.docker_compose:
-      project_src: ~/backend
-      state: absent
+  tasks:
+    - name: Stop backend
+      community.docker.docker_compose:
+        project_src: ~/backend
+        state: absent
