@@ -34,8 +34,8 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
       return <img src={sydneyDemographicURL} alt="SydneyDemographic" width = {1000} height = "500"></img>
     }else if (stateName == "Adelaide"){
       return <img src={adelaideDemographicURL} alt="AdelaideDemographic" width = {1000} height = "500"></img>
-    }else if (stateName == "Brisbaine"){
-      return <img src={brisbaneDemographicURL} alt="BrisbaineDemographic" width = {1000} height = "500"></img>
+    }else if (stateName == "Brisbane"){
+      return <img src={brisbaneDemographicURL} alt="BrisbaneDemographic" width = {1000} height = "500"></img>
     }else if (stateName == "Perth"){
       return <img src={perthDemographicURL} alt="PerthDemographic" width = {1000} height = "500"></img>
     }else{
@@ -47,12 +47,12 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
 
 function TwitterPage() {
 
-  const httpIP = "10.12.148.167"
+  const httpIP = "100.95.194.150"
   const httpPortNumber = "1000"
 
   const twitter_default = "https://en.wikipedia.org/wiki/HI"
   const twitter_melbourne_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/melbourne-map.html"
-  const twitter_sydney_dest = "https://en.wikipedia.org/wiki/Apache_CouchDB"
+  const twitter_sydney_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/sydney-map.html"
   const twitter_adelaide_dest = "https://en.wikipedia.org/wiki/React_(software)"
   const twitter_brisbane_dest = "https://en.wikipedia.org/wiki/Ansible"
   const twitter_perth_dest = "https://en.wikipedia.org/wiki/Python_(programming_language)"
@@ -103,17 +103,14 @@ function TwitterPage() {
             
         <h1>Twitter Page</h1>
 
-        
-        
          {/* Location buttons */}
         <Box sx={{ flexDirection:'column', marginBottom:'20px'}}>
           <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_melbourne_dest); setStateName("Melbourne")}}>Melbourne</Button>
           <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_sydney_dest); setStateName("Sydney")}}>Sydney</Button>
           <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_adelaide_dest); setStateName("Adelaide")}}>Adelaide</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_brisbane_dest); setStateName("Brisbaine")}}>Brisbaine</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_brisbane_dest); setStateName("Brisbane")}}>Brisbaine</Button>
           <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_perth_dest); setStateName("Perth")}}>Perth</Button>
         </Box>
-
 
          {/* Big Box with drop down and graph */}
          <Box sx={{display:"flex", gap:"1rem"}} >

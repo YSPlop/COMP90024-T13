@@ -8,6 +8,8 @@ import random
 app = Flask(__name__)
 CORS(app)
 
+
+
 # database view and return a number to front end
 @app.route("/mastadon_server_count")
 def get_mastadon_server_count():
@@ -47,7 +49,7 @@ def get_random_number():
 # (everyone can access this API)
 if __name__ == "__main__":
     app.run(
-        host='10.12.148.167',
+        host="100.95.194.150",
         port=5100,
         debug=True,
     )

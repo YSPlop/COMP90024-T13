@@ -37,10 +37,10 @@ function displayGraph(currentHashTag, httpIP, httpPortNumber){
 
 function MastodonPage() {
 
-  const backendIP = "10.12.148.167";
+  const backendIP = "100.95.194.150";
   const backendPortNumber = "5100";
 
-  const httpIP = "10.12.148.167";
+  const httpIP = "100.95.194.150";
   const httpPortNumber = "1000";
 
   // BackEnd IP addresses
@@ -124,27 +124,6 @@ function MastodonPage() {
         }
       )
   }
-
-  // Set random number from backend
-  // React.useEffect(() => {
-     
-  //   fetch(randomNumIP)
-  //     .then()
-  //     .then(res => res.json())
-  //     .then(
-  //       (result) => {
-  //           console.log('result', result)
-  //           setRandomNumber(result);
-  //       },
-  //       (error) => {
-  //         console.log(error)
-  //       }
-
-  //     )
-  // },[randomNumIP]);
-
-  
-
   
   // Navigation control
   if (goToTwitter){
