@@ -5,9 +5,9 @@
 #   roles:
 #     - openstack-volume
 
-- hosts: all:!harvester
-  roles:
-    - volumes
+# - hosts: all:!harvester
+#   roles:
+#     - volumes
 
 - hosts: all
   roles:
