@@ -12,7 +12,7 @@ services:
     ports:
       - 80:80
     depends_on:
-      - web
+      - flask
   assets:
     build: ./services/asset-server
     ports:
