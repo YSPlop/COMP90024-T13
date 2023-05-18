@@ -1,6 +1,7 @@
 #https://testdriven.io/blog/dockerizing-flask-with-postgres-gunicorn-and-nginx/
 services:
   flask:
+    restart: always
     build: ./services/flask
     command: gunicorn --bind 0.0.0.0:5000 server:app
     expose:
@@ -8,12 +9,14 @@ services:
     volumes:
       - ./assets:/app/assets
   nginx:
+    restart: always
     build: ./services/nginx
     ports:
       - 80:80
     depends_on:
       - flask
   assets:
+    restart: always
     build: ./services/asset-server
     ports:
       - 8081:8081

@@ -18,6 +18,11 @@
         path: ~/backend
         state: directory
 
+    - name: Remove old script files
+      ansible.builtin.file:
+        path: ~/backend
+        state: absent
+
     - name: Copy script files
       ansible.builtin.copy:
         src: ./
