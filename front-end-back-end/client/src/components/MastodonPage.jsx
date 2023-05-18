@@ -4,10 +4,6 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { Navigate } from 'react-router-dom'
 import React from 'react'
 
-// Learn how to do refresh 
-// live count of Mastadon data, total tweets
-// pick a category and show how many of those tweets
-
 //Create custom components, that uses MUI to make DIVS. 
 const DivComponent = styled('div')({
   color: 'darkslategray',
@@ -17,6 +13,7 @@ const DivComponent = styled('div')({
 
 // Display the count if count is available
 function displayCount(couchdbCount){
+  console.log("couchDB count is ", {couchdbCount});
   if (couchdbCount != 0){
     return <Typography variant="h3"> couchdbcount: {couchdbCount} </Typography>
   }else{
@@ -40,10 +37,10 @@ function displayGraph(currentHashTag, httpIP, httpPortNumber){
 
 function MastodonPage() {
 
-  const backendIP = "100.95.194.150";
+  const backendIP = "10.12.148.167";
   const backendPortNumber = "5100";
 
-  const httpIP = "100.95.194.150";
+  const httpIP = "10.12.148.167";
   const httpPortNumber = "1000";
 
   // BackEnd IP addresses
@@ -66,7 +63,8 @@ function MastodonPage() {
   // Set Member names from backend
   React.useEffect(() => {
      
-      fetch(memberServerIP)
+    const callMemberList = async() => {
+      await fetch(memberServerIP)
         .then()
         .then(res => res.json())
         .then(
@@ -79,7 +77,10 @@ function MastodonPage() {
           }
 
         )
-    }, []);
+    } 
+    callMemberList().catch(console.error);
+
+  }, []);
 
   React.useEffect(() => {
       
@@ -186,6 +187,7 @@ function MastodonPage() {
           <Button 
             variant="contained" 
             onClick={() => {
+              console.log("I clicked the button random number")
               {getRandomNumber()}
             }}>
               Random Number Button

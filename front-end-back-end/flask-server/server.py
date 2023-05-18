@@ -8,16 +8,6 @@ import random
 app = Flask(__name__)
 CORS(app)
 
-
-# Set port number as 5000 for the front end and back end
-
-# Check connection between front end and back end
-
-# display graph on web page
-
-# COMP90024-T13/front-end-back-end/flask-server/python-files/couchdb_view.py
-# Everytime i do database.view the data gets refreshed.
-
 # database view and return a number to front end
 @app.route("/mastadon_server_count")
 def get_mastadon_server_count():
@@ -33,7 +23,7 @@ def get_mastadon_server_count():
     # Count the number of data
     count = len(view_mastodon)
     # temp = count + random.randrange(1,100)
-    print("count is ", count)
+    print("mastadon_server_count is ", count)
     
     # return the number of data
     return jsonify(count)
@@ -45,16 +35,19 @@ def get_members():
     # return{"members" : ["Member1", "Member2", "Member3"]}
     list_i_want = ["lol", "lol2", "lol3"]
     temp = jsonify(list_i_want)
+    print("members list is ", temp);
     return temp
 
 @app.route("/random_number")
 def get_random_number():
-    return jsonify(random.randrange(1,100))
+    temp = random.randrange(1,100)
+    print("random number requested ", temp )
+    return jsonify(temp)
 
 # (everyone can access this API)
 if __name__ == "__main__":
     app.run(
-        host='100.95.194.150',
+        host='10.12.148.167',
         port=5100,
         debug=True,
     )
