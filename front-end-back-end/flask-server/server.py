@@ -1,8 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import couchdb
 import ijson
 import random
+
+from MastadonT13 import MastodonT13
 
 
 app = Flask(__name__)
@@ -46,10 +48,36 @@ def get_random_number():
     print("random number requested ", temp )
     return jsonify(temp)
 
+
+@app.route("/hashtagList")
+def get_hashtag_list():
+    mastodon = MastodonT13()
+    hashtag_list = mastodon.hashtag_list()
+    print("hashtagList fetched: ", hashtag_list)
+    return jsonify(hashtag_list)
+
+@app.route("/barChart")
+def get_bar_chart():
+    mastodon = MastodonT13()
+    path = mastodon.bar_chart()
+    print("barChart fetched: ", path)
+    return jsonify(path)
+
+@app.route("/histogram", methods=["POST"])
+def get_histogram():
+    hashtag = request.json['hashtag']
+    hashtag = hashtag['member']
+    mastodon = MastodonT13()
+    path = mastodon.histogram(hashtag)
+    print("histogram fetched: ", path)
+    return jsonify(path)
+
+
+    
+
 # (everyone can access this API)
 if __name__ == "__main__":
     app.run(
-        host="100.95.194.150",
         port=5100,
         debug=True,
     )

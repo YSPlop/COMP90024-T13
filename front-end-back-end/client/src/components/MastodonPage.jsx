@@ -9,67 +9,99 @@ const DivComponent = styled('div')({
   color: 'darkslategray',
   backgroundColor: 'aliceblue',
   padding: 8,
+  width: 800,
+  height: 600,
 });
-
-// Display the count if count is available
-function displayCount(couchdbCount){
-  console.log("couchDB count is ", {couchdbCount});
-  if (couchdbCount != 0){
-    return <Typography variant="h3"> couchdbcount: {couchdbCount} </Typography>
-  }else{
-    return <Typography variant="h3"> couch DB count Loading... </Typography>
-  }
-}
 
 // Depending on the set currentHashTag display the right picture
 /*
   currentHashTag: the same name should be used for hash tag demographic png
 */
-function displayGraph(currentHashTag, httpIP, httpPortNumber){
+function displayGraph(currentHashTag, httpIP, httpPortNumber, width, barChartDisplay, barChartAddress, histogramAddress){
 
   // image locations on server 
   // you add the date at the end to make the URL unique everytime you click it so it forced a refresh for the picture
-  const destinationURL = "http://" + httpIP + ":" + httpPortNumber + "/hashTagGraphs/" + currentHashTag + ".png" + "?" + new Date();
+  const destinationBarChartAdress  = "http://" + httpIP + ":" + httpPortNumber + barChartAddress
+  
+  
+  const destinationURLHistogram = "http://" + httpIP + ":" + httpPortNumber + histogramAddress;
+  console.log("histogram address is " + destinationURLHistogram);
 
-  return <img src={destinationURL} alt="hashtag_Demographic" width = {1000} height = "500"></img>
+  if (barChartDisplay == true){
+    console.log("barchart address is " + destinationBarChartAdress);
+    return <img src= {destinationBarChartAdress} alt="bargraph" width = {width} height = "500"></img>
+  }else{
+    return <img src={destinationURLHistogram} alt="hashtag_histogram_demographic" width = {width} height = "500"></img>
+  }
 
 }
 
 function MastodonPage() {
 
-  const backendIP = "100.95.194.150";
+  const backendIP = "127.0.0.1";
   const backendPortNumber = "5100";
 
-  const httpIP = "100.95.194.150";
+  const httpIP = "127.0.0.1";
   const httpPortNumber = "1000";
 
   // BackEnd IP addresses
-  const memberServerIP = "http://" + backendIP + ":" + backendPortNumber + "/members"
-  const couchdbCountIP = "http://" + backendIP + ":"+ backendPortNumber + "/mastadon_server_count"
-  const randomNumIP = "http://" + backendIP + ":"+ backendPortNumber + "/random_number"
+  const hashTagListIP = "http://" + backendIP + ":" + backendPortNumber + "/hashtagList"
+  const barChartIP = "http://" + backendIP + ":" + backendPortNumber + "/barChart"
+  const histogramChartIP = "http://" + backendIP + ":" + backendPortNumber + "/histogram"
+
+  const width = 750;
   
 
   // constant update values
   const [hashTagList, setHashTagList] = React.useState()
-  const [couchdbCount, setCouchDBCount] = React.useState(0)
-  const [currentHashTag, setCurrentHashTag] = React.useState("first")
-  const [randomNumber, setRandomNumber] = React.useState(0)
+  const [currentHashTag, setCurrentHashTag] = React.useState("")
+
+  const [barChartDisplay, setbarChartDisplay] = React.useState(true)
+  const [barChartAddress, setBarChartAddress] = React.useState("")
+
+  const [histogramAddress, setHistogramAddress] = React.useState("")
 
   // Navigation states
   const [goToTwitter, setGoToTwitter] = React.useState(false);
   const [goToHome, setGoToHome] = React.useState(false);
+
+  
+
+  async function hashTagButtonHandler(member)  {
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ hashtag: {member}})
+    };
+
+    console.log("Current hashtag in handler is " + currentHashTag);
+
+    await fetch(histogramChartIP, requestOptions)
+      .then(res => res.json())
+      .then(result => {
+        setHistogramAddress(result);
+        console.log('histogram fetched:', result);
+        
+      })
+      .catch(error => {
+        console.error('Error fetching histogram:', error);
+      });
+
+  }
+
   
   // Use effects
   // Set Member names from backend
   React.useEffect(() => {
      
-    const callMemberList = async() => {
-      await fetch(memberServerIP)
+    const callHashtagList = async() => {
+      await fetch(hashTagListIP)
         .then()
         .then(res => res.json())
         .then(
           (result) => {
-              console.log('member result', result)
+              console.log('hashtagList result', result)
               setHashTagList(result);
           },
           (error) => {
@@ -78,51 +110,24 @@ function MastodonPage() {
 
         )
     } 
-    callMemberList().catch(console.error);
+    callHashtagList().catch(console.error);
 
   }, []);
 
-  React.useEffect(() => {
-      
-    const callCouchDB = async() => {
-      await fetch(couchdbCountIP)
+  async function getBarChartAdress(){
+
+    await fetch(barChartIP)
+        .then()
         .then(res => res.json())
         .then(
           (result) => {
-              console.log('couchDB count', result)
-              setCouchDBCount(result);
+              console.log('barChart result', result)
+              setBarChartAddress(result);
           },
           (error) => {
-            console.log(error)
+            console.log("callBarChartAddress",  error)
           }
         )
-    }
-    
-    callCouchDB().catch(console.error);
-
-  })
-
-  // // Every 1000ms (1s) mastadon data is fetched from couchdb to be represented in the front end
-  // React.useEffect( () => {
-  //   const interval =  setInterval(async () => {
-  //     await callCouchDB();
-  //     }, 1000);
-  //     return () => clearInterval(interval);
-  // }, []);
- 
-  async function getRandomNumber(){
-    await fetch(randomNumIP)
-      .then()
-      .then(res => res.json())
-      .then(
-        (result) => {
-            console.log('Random Number', result)
-            setRandomNumber(result);
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
   }
   
   // Navigation control
@@ -157,75 +162,70 @@ function MastodonPage() {
       </Box>
 
       {/* Heading */}
-      <Typography variant="h1">Mastodon Page</Typography>
+      <Typography variant="h2">Mastodon Page</Typography>
+      <Box sx={{display:"flex", gap:"1rem"}} >
 
-      {/* Random number */}
-      <Box sx = {{mb: 7.5}}>
-        
-        
-          <Button 
+
+        <Box>    
+          <Button sx = {{mb : 2.5}}
+            style={{maxHeight: '40px'}}
             variant="contained" 
             onClick={() => {
-              console.log("I clicked the button random number")
-              {getRandomNumber()}
+              setbarChartDisplay(true);
+              getBarChartAdress();
+
             }}>
-              Random Number Button
+              Bar Chart
           </Button>
 
-        <Typography variant="h3">Random Number: {randomNumber}</Typography>
-      </Box>
-      
-      {/* Dynamic CouchDB count */}
-      <Box sx = {{mb: 7.5}}>
-        {displayCount(couchdbCount)}
-      </Box>
+          {/* Make a hash tag drop down */}
+          <Box sx = {{mb: 7.5}}>
+            <PopupState variant="popover" popupId="demo-popup-menu">
+                {(popupState) => (
+                  <React.Fragment>
 
-      {/* Make a hash tag drop down */}
-      <Box sx = {{mb: 7.5}}>
-        <PopupState variant="popover" popupId="demo-popup-menu">
-            {(popupState) => (
-              <React.Fragment>
+                    {/* The drop down main button */}
+                    <Button style={{maxHeight: '40px'}} variant="contained" onClick={() => {window.location.reload(true)}}{...bindTrigger(popupState)}>
+                      Presentation Type
+                    </Button>
 
-                {/* The drop down main button */}
-                <Button style={{maxHeight: '40px'}} variant="contained" onClick={() => {window.location.reload(true)}}{...bindTrigger(popupState)}>
-                  Presentation Type
-                </Button>
+                    {/* The drop down menu */}
+                    <Menu {...bindMenu(popupState)}>
+                      {typeof hashTagList === 'undefined' ? (
+                          <MenuItem>Loading </MenuItem>
+                        ) : (
+                          hashTagList && hashTagList.length > 0 ? (
+                            hashTagList.map((member, index) => (
+                              <MenuItem key={index} data-my-value={member} onClick={() => {setCurrentHashTag(member); setbarChartDisplay(false); hashTagButtonHandler(member)}}> 
+                                {member}
+                              </MenuItem >
+                          ))) : (
+                            <p>No data available</p>
+                          )
+                        )
+                      }
+                    </Menu>
 
-                {/* The drop down menu */}
-                <Menu {...bindMenu(popupState)}>
-                  {typeof hashTagList === 'undefined' ? (
-                      <MenuItem>Loading </MenuItem>
-                    ) : (
-                      hashTagList && hashTagList.length > 0 ? (
-                        hashTagList.map((member, index) => (
-                          <MenuItem key={index} value={member} onClick={()=> {setCurrentHashTag(member); getRandomNumber();}}>
-                            {member}
-                          </MenuItem>
-                      ))) : (
-                        <p>No data available</p>
-                      )
-                    )
-                  }
-                </Menu>
-
-              </React.Fragment>
-            )}
-        </PopupState>
-      </Box>
-      
-      {/* Heading with picture for the hash tag clicked */}
-      <Box key={currentHashTag}>        
-          <Paper square={true} variant="outlined">
-            <Container fixed> 
-              <DivComponent>
-                  
-                    <Typography variant="h2">{currentHashTag}</Typography>
-                    {displayGraph(currentHashTag, httpIP, httpPortNumber)}
-                  
-              </DivComponent>
-            </Container>
-          </Paper>
-          
+                  </React.Fragment>
+                )}
+            </PopupState>
+        </Box>
+        </Box> 
+        
+        {/* Heading with picture for the hash tag clicked */}
+        <Box>        
+            <Paper square={true} variant="outlined">
+              <Container fixed> 
+                <DivComponent>
+                    
+                      <Typography variant="h2">{currentHashTag}</Typography>
+                      {displayGraph(currentHashTag, httpIP, httpPortNumber, width, barChartDisplay, barChartAddress, histogramAddress)}
+                    
+                </DivComponent>
+              </Container>
+            </Paper>
+            
+        </Box>
       </Box>
 
 
