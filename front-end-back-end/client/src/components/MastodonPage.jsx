@@ -29,11 +29,27 @@ function displayGraph(currentHashTag, httpIP, httpPortNumber, width, barChartDis
 
   if (barChartDisplay == true){
     console.log("barchart address is " + destinationBarChartAdress);
-    return <img src= {destinationBarChartAdress} alt="bargraph" width = {width} height = "500"></img>
+    if (barChartAddress == ""){
+      return (
+      <Typography variant="h3"> Press a button </Typography>
+      )
+    }else{
+      return <img src= {destinationBarChartAdress} alt="bargraph" width = {width} height = "500"></img>
+    }
   }else{
     return <img src={destinationURLHistogram} alt="hashtag_histogram_demographic" width = {width} height = "500"></img>
   }
 
+}
+
+// Display the count if count is available
+function displayCount(couchdbCount){
+  console.log("couchDB count is ", {couchdbCount});
+  if (couchdbCount != 0){
+    return <Typography variant="body"> couchdbcount: {couchdbCount} </Typography>
+  }else{
+    return <Typography variant="body"> couch DB count Loading... </Typography>
+  }
 }
 
 function MastodonPage() {
@@ -48,13 +64,15 @@ function MastodonPage() {
   const hashTagListIP = "http://" + backendIP + ":" + backendPortNumber + "/hashtagList"
   const barChartIP = "http://" + backendIP + ":" + backendPortNumber + "/barChart"
   const histogramChartIP = "http://" + backendIP + ":" + backendPortNumber + "/histogram"
+  const couchdbCountIP = "http://" + backendIP + ":"+ backendPortNumber + "/mastadon_server_count"
 
   const width = 750;
   
 
   // constant update values
   const [hashTagList, setHashTagList] = React.useState()
-  const [currentHashTag, setCurrentHashTag] = React.useState("")
+  const [currentHashTag, setCurrentHashTag] = React.useState()
+  const [couchdbCount, setCouchDBCount] = React.useState(0)
 
   const [barChartDisplay, setbarChartDisplay] = React.useState(true)
   const [barChartAddress, setBarChartAddress] = React.useState("")
@@ -129,6 +147,26 @@ function MastodonPage() {
           }
         )
   }
+
+  React.useEffect(() => {
+      
+    const callCouchDB = async() => {
+      await fetch(couchdbCountIP)
+        .then(res => res.json())
+        .then(
+          (result) => {
+              console.log('couchDB count', result)
+              setCouchDBCount(result);
+          },
+          (error) => {
+            console.log(error)
+          }
+        )
+    }
+    
+    callCouchDB().catch(console.error);
+
+  }, [])
   
   // Navigation control
   if (goToTwitter){
@@ -163,9 +201,15 @@ function MastodonPage() {
 
       {/* Heading */}
       <Typography variant="h2">Mastodon Page</Typography>
+
+      {/* CouchDB count */}
+      <Box sx = {{mb: 7.5}}>
+        {displayCount(couchdbCount)}
+      </Box>
+
       <Box sx={{display:"flex", gap:"1rem"}} >
 
-
+        {/* Bar chart button */}
         <Box>    
           <Button sx = {{mb : 2.5}}
             style={{maxHeight: '40px'}}
