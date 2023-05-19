@@ -3,27 +3,7 @@ import { Button, Typography } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 
 export default function Home() {
-
-    // const [data, setData] = React.useState([])
-
-    // React.useEffect(() => {
-    //     fetch("http://127.0.0.1:5000/members")
-    //       .then(res => res.json())
-    //       .then(
-    //         (result) => {
-    //             console.log('result', result.members)
-    //             setData(result.members);
-    //         },
-    //         (error) => {
-    //           console.log(error)
-    //         }
-    //       )
-    //   }, [])
-
-    //  you need to run the html server first 
-    // http-server -g ./map.html
-    // http-server -p 1000 -g ./map.html
-
+  
     const [goToTwitter, setGoToTwitter] = React.useState(false);
     const [goToMastadon, setGoToMastadon] = React.useState(false);
 
