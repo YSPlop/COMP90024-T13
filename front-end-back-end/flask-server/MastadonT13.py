@@ -80,10 +80,3 @@ class MastodonT13:
         path = path[8:]
 
         return path
-    
-# if __name__ == '__main__':
-#     print("mastadonT13.py is running")
-#     mastodon = MastodonT13();
-#     print(mastodon.hashtag_list())
-#     print(mastodon.bar_chart())
-#     print(mastodon.histogram("eurovision"))

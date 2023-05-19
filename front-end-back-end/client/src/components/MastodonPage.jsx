@@ -54,9 +54,11 @@ function displayCount(couchdbCount){
 
 function MastodonPage() {
 
+  // IP address and port numbers for the backend code
   const backendIP = "127.0.0.1";
   const backendPortNumber = "5100";
 
+  // IP address and port numbers for the http server
   const httpIP = "127.0.0.1";
   const httpPortNumber = "1000";
 
@@ -68,12 +70,14 @@ function MastodonPage() {
 
   const width = 750;
   
-
-  // constant update values
+  // states for fetching hash tag list and maintain information of the current hashtag we are viewing
   const [hashTagList, setHashTagList] = React.useState()
   const [currentHashTag, setCurrentHashTag] = React.useState()
+
+  // variable to keep track of the number of toots from Mastadon through couchDB
   const [couchdbCount, setCouchDBCount] = React.useState(0)
 
+  // states for bar chart and histogram that is used to store the location for the saved barchart and histogram
   const [barChartDisplay, setbarChartDisplay] = React.useState(true)
   const [barChartAddress, setBarChartAddress] = React.useState("")
 
@@ -84,7 +88,13 @@ function MastodonPage() {
   const [goToHome, setGoToHome] = React.useState(false);
 
   
-
+  /*
+  * when the hashtag is chosen 
+    * 1. current hashtag value passed in as member
+    * 2. send the value to flask as a variable as a json {hashtag: {member: <Current hash tag value>}}
+    * 3. the variable is passed to the backend and generate a graph
+    * 4. the function returns the relative location of the file in http server
+  */
   async function hashTagButtonHandler(member)  {
 
     const requestOptions = {
@@ -108,9 +118,28 @@ function MastodonPage() {
 
   }
 
+  /*
+  * When a button is clicked this function is called
+  * This function then generates a graph and returns the location in http server
+  */
+  async function getBarChartAdress(){
+
+    await fetch(barChartIP)
+        .then()
+        .then(res => res.json())
+        .then(
+          (result) => {
+              console.log('barChart result', result)
+              setBarChartAddress(result);
+          },
+          (error) => {
+            console.log("callBarChartAddress",  error)
+          }
+        )
+  }
+
   
-  // Use effects
-  // Set Member names from backend
+  // Retrieves hash tag list from mastadon couchDB
   React.useEffect(() => {
      
     const callHashtagList = async() => {
@@ -132,22 +161,8 @@ function MastodonPage() {
 
   }, []);
 
-  async function getBarChartAdress(){
-
-    await fetch(barChartIP)
-        .then()
-        .then(res => res.json())
-        .then(
-          (result) => {
-              console.log('barChart result', result)
-              setBarChartAddress(result);
-          },
-          (error) => {
-            console.log("callBarChartAddress",  error)
-          }
-        )
-  }
-
+  
+  // Retrieves couchDB count from mastadon couchDB
   React.useEffect(() => {
       
     const callCouchDB = async() => {
@@ -207,6 +222,7 @@ function MastodonPage() {
         {displayCount(couchdbCount)}
       </Box>
 
+      {/* Bar chart and hash tag buttons, Layer to control the layout of buttons to control the graphs and the graph */}
       <Box sx={{display:"flex", gap:"1rem"}} >
 
         {/* Bar chart button */}
@@ -222,59 +238,56 @@ function MastodonPage() {
               Bar Chart
           </Button>
 
-          {/* Make a hash tag drop down */}
-          <Box sx = {{mb: 7.5}}>
-            <PopupState variant="popover" popupId="demo-popup-menu">
-                {(popupState) => (
-                  <React.Fragment>
+        {/* Make a hash tag drop down */}
+        <Box sx = {{mb: 7.5}}>
+          <PopupState variant="popover" popupId="demo-popup-menu">
+              {(popupState) => (
+                <React.Fragment>
 
-                    {/* The drop down main button */}
-                    <Button style={{maxHeight: '40px'}} variant="contained" onClick={() => {window.location.reload(true)}}{...bindTrigger(popupState)}>
-                      Presentation Type
-                    </Button>
+                  {/* The drop down main button */}
+                  <Button style={{maxHeight: '40px'}} variant="contained" onClick={() => {window.location.reload(true)}}{...bindTrigger(popupState)}>
+                    Presentation Type
+                  </Button>
 
-                    {/* The drop down menu */}
-                    <Menu {...bindMenu(popupState)}>
-                      {typeof hashTagList === 'undefined' ? (
-                          <MenuItem>Loading </MenuItem>
-                        ) : (
-                          hashTagList && hashTagList.length > 0 ? (
-                            hashTagList.map((member, index) => (
-                              <MenuItem key={index} data-my-value={member} onClick={() => {setCurrentHashTag(member); setbarChartDisplay(false); hashTagButtonHandler(member)}}> 
-                                {member}
-                              </MenuItem >
-                          ))) : (
-                            <p>No data available</p>
-                          )
+                  {/* The drop down menu */}
+                  <Menu {...bindMenu(popupState)}>
+                    {typeof hashTagList === 'undefined' ? (
+                        <MenuItem>Loading </MenuItem>
+                      ) : (
+                        hashTagList && hashTagList.length > 0 ? (
+                          hashTagList.map((member, index) => (
+                            <MenuItem key={index} data-my-value={member} onClick={() => {setCurrentHashTag(member); setbarChartDisplay(false); hashTagButtonHandler(member)}}> 
+                              {member}
+                            </MenuItem >
+                        ))) : (
+                          <p>No data available</p>
                         )
-                      }
-                    </Menu>
+                      )
+                    }
+                  </Menu>
 
-                  </React.Fragment>
-                )}
-            </PopupState>
+                </React.Fragment>
+              )}
+          </PopupState>
         </Box>
-        </Box> 
+      </Box> 
         
-        {/* Heading with picture for the hash tag clicked */}
-        <Box>        
-            <Paper square={true} variant="outlined">
-              <Container fixed> 
-                <DivComponent>
-                    
-                      <Typography variant="h2">{currentHashTag}</Typography>
-                      {displayGraph(currentHashTag, httpIP, httpPortNumber, width, barChartDisplay, barChartAddress, histogramAddress)}
-                    
-                </DivComponent>
-              </Container>
-            </Paper>
-            
-        </Box>
+      {/* Heading with picture for the hash tag clicked */}
+      <Box>        
+          <Paper square={true} variant="outlined">
+            <Container fixed> 
+              <DivComponent>
+                  
+                    <Typography variant="h2">{currentHashTag}</Typography>
+                    {displayGraph(currentHashTag, httpIP, httpPortNumber, width, barChartDisplay, barChartAddress, histogramAddress)}
+                  
+              </DivComponent>
+            </Container>
+          </Paper>
+          
       </Box>
 
-
-      
-
+    </Box>
     </div>
     
   )

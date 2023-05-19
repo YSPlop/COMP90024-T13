@@ -54,7 +54,6 @@ function TwitterPage() {
   const httpIP = "127.0.0.1"
   const httpPortNumber = "1000"
 
-  // const twitter_default = "https://en.wikipedia.org/wiki/HI"
   const twitter_melbourne_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/melbourne-map1.html"
   const twitter_sydney_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/sydney-map.html"
   const twitter_adelaide_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/adelaide-map.html"

@@ -32,23 +32,6 @@ def get_mastadon_server_count():
     # return the number of data
     return jsonify(count)
 
-
-# Member API route
-@app.route("/members")
-def get_members():
-    # return{"members" : ["Member1", "Member2", "Member3"]}
-    list_i_want = ["lol", "lol2", "lol3"]
-    temp = jsonify(list_i_want)
-    print("members list is ", temp);
-    return temp
-
-@app.route("/random_number")
-def get_random_number():
-    temp = random.randrange(1,100)
-    print("random number requested ", temp )
-    return jsonify(temp)
-
-
 @app.route("/hashtagList")
 def get_hashtag_list():
     mastodon = MastodonT13()
