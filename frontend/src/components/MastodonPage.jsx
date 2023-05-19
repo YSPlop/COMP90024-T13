@@ -55,12 +55,12 @@ function displayCount(couchdbCount){
 function MastodonPage() {
 
   // IP address and port numbers for the backend code
-  const backendIP = "127.0.0.1";
-  const backendPortNumber = "5100";
+  const backendIP = "172.26.135.101";
+  const backendPortNumber = "80";
 
   // IP address and port numbers for the http server
-  const httpIP = "127.0.0.1";
-  const httpPortNumber = "1000";
+  const httpIP = "172.26.135.101";
+  const httpPortNumber = "8081";
 
   // BackEnd IP addresses
   const hashTagListIP = "http://" + backendIP + ":" + backendPortNumber + "/hashtagList"
