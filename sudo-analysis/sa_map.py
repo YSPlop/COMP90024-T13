@@ -18,7 +18,7 @@ if __name__ == "__main__":
     df_sentiment = twitter2df(view_twitter)
     df_plot = formatmerge(df, df_sentiment, "lga_name16")
 
-    # Create map centered on Victoria
+    # Create map centered on SA
     map = folium.Map(location=[-33, 135.6], zoom_start=6.2, tiles ="CartoDB Positron") 
     
     # add chropleth layer

@@ -14,8 +14,6 @@ if __name__ == "__main__":
         
     view_twitter = '_design/location/_view/location'
     df_sentiment = twitter2df(view_twitter)
-    df_plot = formatmerge(df, df_sentiment, "lga_name")
-
     # Define a dictionary mapping the old values to the new values
     value_mapping = {
         'Shoalhaven': 'Shoalhaven Shire',
@@ -26,11 +24,16 @@ if __name__ == "__main__":
         'Port Stephens Shire': 'Port Stephens',
         'Byron Shire':'Byron',
         'Queanbeyan': 'Queanbeyan-Palerang Regional',  
-        # Add more mappings as needed
+    # Add more mappings as needed
     }
 
     # Replace the values using the dictionary
     df_sentiment['key'] = df_sentiment['key'].replace(value_mapping)
+
+
+    df_plot = formatmerge(df, df_sentiment, "lga_name")
+
+
 
     # Create map centered on Victoria
     map = folium.Map(location=[-32.1, 147], zoom_start=6.3, tiles ="CartoDB Positron")
@@ -53,7 +56,7 @@ if __name__ == "__main__":
     'color':'#000000', 'fillOpacity': 0.50, 'weight': 0.1}, tooltip=folium.features.GeoJsonTooltip(fields=['lga_name' , 'chldrn_fmls_mthr_lw_edctnl_attnmnt_2016_pc_in_whre_the_hs', 'avg' ], aliases = [ "LGA", "Mother Low Education", "Sentiment Score"], labels = True,sticky = False))
     map.add_child(highlights)
     map.keep_in_front(highlights)
-    map.save('./sudo-analysis/maps/nsw-map.html')
+    map.save('nsw-map.html')
 
 
     # Filter out rows with "no tweet data" values
