@@ -11,11 +11,11 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
 
 
   // image locations on server
-  const melbourneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Melbourne.png";
-  const sydneyDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Sydney.png"
-  const adelaideDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Adelaide.png"
-  const brisbaneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Brisbaine.png"
-  const perthDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/Perth.png"
+  const victoria1DemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/vic1.png";
+  const victoria2DemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/vic2.png"
+  const sydneyDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/nsw.png"
+  const adelaideDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/sa.png"
+  const brisbaneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/qld.png"
 
 
   if (displayGraph == true){
@@ -23,16 +23,16 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
       return <iframe src= {iFrameLocation} width={1300} height="600"></iframe>
 
   }else{ 
-    if (stateName == "Melbourne"){
-      return <img src={melbourneDemographicURL} alt="MelbourneDemographic" width = {width} height = "500"></img>
+    if (stateName == "Victoria1"){
+      return <img src={victoria1DemographicURL} alt="Victoria1Demographic" width = {width} height = "500"></img>
+    }else if (stateName == "Victoria2"){
+      return <img src={victoria2DemographicURL} alt="Victoria2Demographic" width = {width} height = "500"></img>
     }else if (stateName == "Sydney"){
-      return <img src={sydneyDemographicURL} alt="SydneyDemographic" width = {width} height = "500"></img>
+      return <img src={sydneyDemographicURL} alt="Sydney Demographic" width = {width} height = "500"></img>
     }else if (stateName == "Adelaide"){
       return <img src={adelaideDemographicURL} alt="AdelaideDemographic" width = {width} height = "500"></img>
     }else if (stateName == "Brisbane"){
       return <img src={brisbaneDemographicURL} alt="BrisbaneDemographic" width = {width} height = "500"></img>
-    }else if (stateName == "Perth"){
-      return <img src={perthDemographicURL} alt="PerthDemographic" width = {width} height = "500"></img>
     }else{
       return "Invalid button"
     }
@@ -45,14 +45,15 @@ function TwitterPage() {
   const httpIP = "172.26.135.101"
   const httpPortNumber = "8081"
 
-  const twitter_melbourne_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/melbourne-map1.html"
-  const twitter_sydney_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/sydney-map.html"
-  const twitter_adelaide_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/adelaide-map.html"
-  const twitter_brisbane_dest = "https://en.wikipedia.org/wiki/Ansible"
-  const twitter_perth_dest = "https://en.wikipedia.org/wiki/Python_(programming_language)"
+
+  const twitter_vic1_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/vic-map1.html"
+  const twitter_vic2_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/vic-map2.html"
+  const twitter_sydney_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/nsw-map.html"
+  const twitter_adelaide_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/sa-map.html"
+  const twitter_queensland_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/qld-map.html"
   
   // You use state whenever you want to change a value of something dynamically with the value change on the website
-  const [iFrameLocation, setiFrameLocation] = React.useState(twitter_melbourne_dest);
+  const [iFrameLocation, setiFrameLocation] = React.useState(twitter_vic1_dest);
 
   // Navigation buttons
   const [goToHome, setGoToHome] = React.useState(false);
@@ -60,7 +61,7 @@ function TwitterPage() {
 
   // Drop down buttons
   const[displayGraph, setDisplayGraph] = React.useState(true);
-  const[stateName, setStateName] = React.useState("Melbourne");
+  const[stateName, setStateName] = React.useState("Victoria1");
 
   // Navigation Control
   if (goToHome){
@@ -99,11 +100,11 @@ function TwitterPage() {
 
          {/* Location buttons */}
         <Box sx={{ flexDirection:'column', marginBottom:'20px'}}>
-          <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_melbourne_dest); setStateName("Melbourne")}}>Melbourne</Button>
+          <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_vic1_dest); setStateName("Victoria1")}}>Victoria1</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_vic2_dest); setStateName("Victoria2")}}>Victoria2</Button>
           <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_sydney_dest); setStateName("Sydney")}}>Sydney</Button>
           <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_adelaide_dest); setStateName("Adelaide")}}>Adelaide</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_brisbane_dest); setStateName("Brisbane")}}>Brisbaine</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_perth_dest); setStateName("Perth")}}>Perth</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_queensland_dest); setStateName("Brisbane")}}>Brisbane</Button>
         </Box>
 
          {/* Big Box with drop down and graph */}

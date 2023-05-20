@@ -68,7 +68,6 @@ function MastodonPage() {
   const httpIP = "172.26.135.101";
   const httpPortNumber = "8081";
 
-
   // BackEnd IP addresses
   const hashTagListIP = "http://" + backendIP + ":" + backendPortNumber + "/hashtagList"
   const barChartIP = "http://" + backendIP + ":" + backendPortNumber + "/barChart"
