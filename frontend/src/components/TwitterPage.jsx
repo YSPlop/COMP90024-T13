@@ -1,17 +1,8 @@
 import React from 'react'
-import { Paper, Box, Button, Container, Typography, MenuItem, Menu } from '@mui/material'
-import { styled } from '@mui/system';
+import {Box, Button, Container, Typography, MenuItem, Menu } from '@mui/material'
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
 import { Navigate } from 'react-router-dom';
 
-//Create custom components, that uses MUI to make DIVS. 
-const DivComponent = styled('div')({
-  color: 'darkslategray',
-  backgroundColor: 'aliceblue',
-  padding: 8,
-  width: 800,
-  height: 300,
-});
 
 // Depnding on whether graph or statistics is required, display required information
 function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber){
@@ -28,8 +19,8 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
 
 
   if (displayGraph == true){
-    
-      return <iframe src= {iFrameLocation} width = {width} height = "500"></iframe>
+
+      return <iframe src= {iFrameLocation} width={1300} height="600"></iframe>
 
   }else{ 
     if (stateName == "Melbourne"){
@@ -116,13 +107,13 @@ function TwitterPage() {
         </Box>
 
          {/* Big Box with drop down and graph */}
-        <Box sx={{display:"flex", gap:"1rem"}} >
+        {/* <Box sx={{display:"flex", gap:"1rem"}} > */}
           {/*Drop down Menu to select graph or picture */}
           <PopupState variant="popover" popupId="demo-popup-menu">
               {(popupState) => (
                 <React.Fragment>
-                  <Button style={{maxHeight: '40px'}} variant="contained" {...bindTrigger(popupState)}>
-                    Presentation Type
+                  <Button sx ={{mb:10}} style={{maxHeight: '40px'}} variant="contained" {...bindTrigger(popupState)}>
+                    Version
                   </Button>
                   <Menu {...bindMenu(popupState)}>
                     <MenuItem onClick={() => {popupState.close; setDisplayGraph(true);}}>Graph</MenuItem>
@@ -133,24 +124,16 @@ function TwitterPage() {
           </PopupState>
 
           {/* Graph and text */}
-          <Paper square={true} variant="outlined">
-            <Container fixed> 
-              <DivComponent>
-                  <Typography variant="h2">{stateName}</Typography>
-                  {maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber)}
-                  <Typography>
-                    hi this is the twitter page
-                  </Typography>
-              </DivComponent>
-
-              <DivComponent>
-                
-              </DivComponent>
-            </Container>
-          </Paper>
+          <Container>
+              <Typography variant="h4">{stateName}</Typography>
+              <div style={{ marginLeft: 0}}>
+                {maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber)}
+              </div>
+          </Container>
+          
 
         </Box> 
-      </Box>
+      {/* </Box> */}
       </div>
     </>
   )

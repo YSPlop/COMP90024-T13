@@ -34,10 +34,16 @@ function displayGraph(currentHashTag, httpIP, httpPortNumber, width, barChartDis
       <Typography variant="h3"> Press a button </Typography>
       )
     }else{
-      return <img src= {destinationBarChartAdress} alt="bargraph" width = {width} height = "500"></img>
+      return <div>
+        <Typography variant="h4">{"Mean Sentiment Score per HashTag"}</Typography>
+        <img src= {destinationBarChartAdress} alt="bargraph" width = {width} height = "500"></img>
+      </div>
     }
   }else{
-    return <img src={destinationURLHistogram} alt="hashtag_histogram_demographic" width = {width} height = "500"></img>
+    return <div>
+      <Typography variant="h4">{currentHashTag}</Typography>
+      <img src={destinationURLHistogram} alt="hashtag_histogram_demographic" width = {width} height = "500"></img>
+    </div>
   }
 
 }
@@ -46,9 +52,9 @@ function displayGraph(currentHashTag, httpIP, httpPortNumber, width, barChartDis
 function displayCount(couchdbCount){
   console.log("couchDB count is ", {couchdbCount});
   if (couchdbCount != 0){
-    return <Typography variant="body"> couchdbcount: {couchdbCount} </Typography>
+    return <Typography variant="body"> Total Harvested Toots: {couchdbCount} </Typography>
   }else{
-    return <Typography variant="body"> couch DB count Loading... </Typography>
+    return <Typography variant="body"> Total Harvested Toots: Loading... </Typography>
   }
 }
 
@@ -61,6 +67,7 @@ function MastodonPage() {
   // IP address and port numbers for the http server
   const httpIP = "172.26.135.101";
   const httpPortNumber = "8081";
+
 
   // BackEnd IP addresses
   const hashTagListIP = "http://" + backendIP + ":" + backendPortNumber + "/hashtagList"
@@ -230,10 +237,9 @@ function MastodonPage() {
           <Button sx = {{mb : 2.5}}
             style={{maxHeight: '40px'}}
             variant="contained" 
-            onClick={() => {
+            onClick={async () => {
               setbarChartDisplay(true);
               getBarChartAdress();
-
             }}>
               Bar Chart
           </Button>
@@ -246,7 +252,7 @@ function MastodonPage() {
 
                   {/* The drop down main button */}
                   <Button style={{maxHeight: '40px'}} variant="contained" onClick={() => {window.location.reload(true)}}{...bindTrigger(popupState)}>
-                    Presentation Type
+                    HashTags
                   </Button>
 
                   {/* The drop down menu */}
@@ -277,8 +283,7 @@ function MastodonPage() {
           <Paper square={true} variant="outlined">
             <Container fixed> 
               <DivComponent>
-                  
-                    <Typography variant="h2">{currentHashTag}</Typography>
+                
                     {displayGraph(currentHashTag, httpIP, httpPortNumber, width, barChartDisplay, barChartAddress, histogramAddress)}
                   
               </DivComponent>

@@ -51,7 +51,7 @@ class MastodonT13:
         plt.xticks(x, df["hashtag"], rotation = 45, fontsize = 12)
         
         timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-        path = f'./assets/bar_chart.png'
+        path = f'./assets/bar_chart_{timestamp}.png'
         plt.savefig(path)
         
         path = path[8:]
@@ -75,7 +75,7 @@ class MastodonT13:
         plt.title(f'Hashtag: {hashtag}', fontsize = 12)
         
         timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-        path = f'./assets/hashTagGraphs/histogram_{hashtag}.png'
+        path = f'./assets/hashTagGraphs/histogram_{hashtag}_{timestamp}.png'
         plt.savefig(path)
         path = path[8:]
 
