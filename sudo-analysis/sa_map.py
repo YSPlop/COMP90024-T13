@@ -39,7 +39,7 @@ if __name__ == "__main__":
     'color':'#000000', 'fillOpacity': 0.50, 'weight': 0.1}, tooltip=folium.features.GeoJsonTooltip(fields=['lga_name16' , 'stress_rate', 'avg' ], aliases = [ "LGA", "Income Stress", "Sentiment Score"], labels = True,sticky = False))
     map.add_child(highlights)
     map.keep_in_front(highlights)
-    map.save('./sudo-analysis/maps/sa-map.html')
+    map.save('sa-map.html')
 
     
     # Filter out rows with "no tweet data" values

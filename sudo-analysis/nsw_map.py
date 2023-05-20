@@ -1,7 +1,5 @@
 import folium
-import geopandas as gpd
 import matplotlib.pyplot as plt
-import pandas as pd
 import seaborn as sns
 import statsmodels.api as sm
 from cccmapping import sudo2df, twitter2df, formatmerge

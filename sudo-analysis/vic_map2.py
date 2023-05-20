@@ -1,7 +1,5 @@
 import folium
-#import geopandas as gpd
 import matplotlib.pyplot as plt
-#import pandas as pd
 import seaborn as sns
 import statsmodels.api as sm
 from cccmapping import sudo2df, twitter2df, formatmerge
@@ -63,7 +61,7 @@ if __name__ == "__main__":
     sns.set_style('darkgrid')
 
     # Set plot size
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 8))
 
     # Create scatterplot with x and y labels
     ax = sns.scatterplot(data=df_filtered, x='patient_rate_per_100k_2017_18', y='avg')

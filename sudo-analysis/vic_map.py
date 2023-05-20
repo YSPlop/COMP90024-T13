@@ -61,7 +61,7 @@ if __name__ == "__main__":
     sns.set_style('darkgrid')
 
     # Set plot size
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 8))
 
     # Create scatterplot with x and y labels
     ax = sns.scatterplot(data=df_filtered, x='indicator_2015', y='avg')
