@@ -49,7 +49,7 @@ def twitter2df(view_path):
 # function to clean LGA names
 def clean_lga_name(lga_name):
     # Standardise LGA Names
-    remove_words = ["City", "of", "Shire", "Municipality"]
+    remove_words = ["City", "of", "Municipality"]
     
     # convert to lowercase and remove any extra whitespace
     lga_name = lga_name.strip()
