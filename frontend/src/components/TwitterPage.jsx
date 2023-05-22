@@ -16,6 +16,7 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
   const sydneyDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/nsw.png"
   const adelaideDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/sa.png"
   const brisbaneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/qld.png"
+  const tasmaniaDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/tasmania.png"
 
 
   if (displayGraph == true){
@@ -33,6 +34,8 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
       return <img src={adelaideDemographicURL} alt="AdelaideDemographic" width = {width} height = "500"></img>
     }else if (stateName == "Brisbane"){
       return <img src={brisbaneDemographicURL} alt="BrisbaneDemographic" width = {width} height = "500"></img>
+    }else if(stateName == "Tasmania"){
+      return <img src={tasmaniaDemographicURL} alt="TasmaniaDemographic" width = {width} height = "500"></img>
     }else{
       return "Invalid button"
     }
@@ -51,6 +54,7 @@ function TwitterPage() {
   const twitter_sydney_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/nsw-map.html"
   const twitter_adelaide_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/sa-map.html"
   const twitter_queensland_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/qld-map.html"
+  const twitter_tasmania_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/tasmania-map.html"
   
   // You use state whenever you want to change a value of something dynamically with the value change on the website
   const [iFrameLocation, setiFrameLocation] = React.useState(twitter_vic1_dest);
@@ -105,6 +109,7 @@ function TwitterPage() {
           <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_sydney_dest); setStateName("Sydney")}}>Sydney</Button>
           <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_adelaide_dest); setStateName("Adelaide")}}>Adelaide</Button>
           <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_queensland_dest); setStateName("Brisbane")}}>Brisbane</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_tasmania_dest); setStateName("Tasmania")}}>Tasmania</Button>
         </Box>
 
          {/* Big Box with drop down and graph */}
