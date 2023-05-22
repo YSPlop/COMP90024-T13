@@ -43,9 +43,9 @@ class MastodonT13:
         plt.bar(x, df["score"], color = (8/255,89/255,156/255))
         plt.grid(True)
         plt.axhline(y = self.twitter_avg, color = (239/255,8/255,8/255) , linestyle='--')
-        plt.text(x[-1] + 1, self.twitter_avg, 'Mean Sentiment Score (Twitter)', color = (239/255,8/255,8/255), fontsize = 12)
+        plt.text(x[-1] - 3.3, self.twitter_avg + 0.0004, 'Mean Sentiment Score (Twitter)', color = (239/255,8/255,8/255), fontsize = 12)
         plt.ylabel('Mean Sentiment Score per Hashtag (Mastodon)', fontsize = 12)
-        plt.xticks(x, df["hashtag"], rotation = 45, fontsize = 12)
+        plt.xticks(x, df["hashtag"], rotation = 45, fontsize = 10)
         
         timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
         path = f'bar_chart_{timestamp}.png'
