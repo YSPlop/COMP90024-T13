@@ -56,10 +56,8 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
 
 function TwitterPage() {
 
-  // const httpIP = "172.26.135.101"
-  const httpIP = "127.0.0.1"
-  const httpPortNumber = "1000"
-  // const httpPortNumber = "8081"
+  const httpIP = "172.26.135.101"
+  const httpPortNumber = "8081"
 
 
   const twitter_vic1_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/vic-map1.html"
@@ -77,7 +75,7 @@ function TwitterPage() {
 
   // Drop down buttons
   const[displayGraph, setDisplayGraph] = React.useState(true);
-  const[stateName, setStateName] = React.useState("Victoria1");
+  const[stateName, setStateName] = React.useState("Victoria 1");
 
   const[graphType, setGraphType] = React.useState("Scatter-Plot");
 
@@ -135,7 +133,7 @@ function TwitterPage() {
                     Version
                   </Button>
                   <Menu {...bindMenu(popupState)}>
-                    <MenuItem onClick={() => {popupState.close; setDisplayGraph(true);}}>Graph</MenuItem>
+                    <MenuItem onClick={() => {popupState.close; setDisplayGraph(true);}}>Interactive Map</MenuItem>
                     <MenuItem onClick={() => {popupState.close; setDisplayGraph(false); setGraphType("Scatter-Plot")}}>Scatter Plot</MenuItem>
                     <MenuItem onClick={() => {popupState.close; setDisplayGraph(false); setGraphType("Violin")}}>Violin</MenuItem>
                   </Menu>
