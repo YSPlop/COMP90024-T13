@@ -1,3 +1,6 @@
+/**
+ * Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
+ */
 import React from 'react'
 import {Box, Button, Container, Typography, MenuItem, Menu } from '@mui/material'
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
