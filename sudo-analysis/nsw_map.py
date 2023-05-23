@@ -86,4 +86,16 @@ if __name__ == "__main__":
     plt.title("Scatter Plot of Mother Educational Attainment and Tweet Sentiment", fontsize =16)
 
     # Save the plot as a PNG file
-    plt.savefig('nsw_scater.png', format='png', dpi=300)
+    plt.savefig('nsw_scatter.png', format='png', dpi=300)
+
+
+    # Set plot size
+    plt.figure(figsize=(12, 8))          
+    # Violin plot
+    sns.violinplot(data=df_filtered, x = 'chldrn_fmls_mthr_lw_edctnl_attnmnt_2016_pc_in_whre_the_hs', orient='h')
+    # Set the x-axis label
+    plt.xlabel("Percent of Children In Families Where The Mother Has Low Educational Attainment")
+    # Set the title
+    plt.title("Violin Plot of Mother Educational Attainment", fontsize =16)
+    # Save the plot as a PNG file
+    plt.savefig('nsw_violin.png', format='png', dpi=300)

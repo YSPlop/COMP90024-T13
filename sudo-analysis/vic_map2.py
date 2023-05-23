@@ -80,4 +80,16 @@ if __name__ == "__main__":
     plt.title("Scatter Plot of Family Violence Rate and Tweet Sentiment", fontsize =16)
 
     # Save the plot as a PNG file
-    plt.savefig('vic_scater2.png', format='png', dpi=300)
+    plt.savefig('vic2_scatter.png', format='png', dpi=300)
+
+
+    # Set plot size
+    plt.figure(figsize=(12, 8))          
+    # Violin plot
+    sns.violinplot(data=df_filtered, x = 'patient_rate_per_100k_2017_18', orient='h')
+    # Set the x-axis label
+    plt.xlabel("Family Violence patient rate per 100k")
+    # Set the title
+    plt.title("Violin Plot of Family Violence Rate", fontsize =16)
+    # Save the plot as a PNG file
+    plt.savefig('vic2_violin.png', format='png', dpi=300)
