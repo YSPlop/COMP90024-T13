@@ -37,15 +37,15 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
       return <iframe src= {iFrameLocation} width={1300} height="600"></iframe>
 
   }else{ 
-    if (stateName == "VIC1"){
+    if (stateName == "Victoria 1"){
       return <img src={victoria1DemographicURL} alt="Victoria1Demographic" width = {width} height = "500"></img>
-    }else if (stateName == "VIC2"){
+    }else if (stateName == "Victoria 2"){
       return <img src={victoria2DemographicURL} alt="Victoria2Demographic" width = {width} height = "500"></img>
-    }else if (stateName == "NSW"){
+    }else if (stateName == "New South Wales"){
       return <img src={sydneyDemographicURL} alt="NSW Demographic" width = {width} height = "500"></img>
-    }else if (stateName == "SA"){
+    }else if (stateName == "South Australia"){
       return <img src={adelaideDemographicURL} alt="SADemographic" width = {width} height = "500"></img>
-    }else if (stateName == "QLD"){
+    }else if (stateName == "Queensland"){
       return <img src={brisbaneDemographicURL} alt="QLDDemographic" width = {width} height = "500"></img>
     }else{
       return "Invalid button"
@@ -56,8 +56,10 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
 
 function TwitterPage() {
 
-  const httpIP = "172.26.135.101"
-  const httpPortNumber = "8081"
+  // const httpIP = "172.26.135.101"
+  const httpIP = "127.0.0.1"
+  const httpPortNumber = "1000"
+  // const httpPortNumber = "8081"
 
 
   const twitter_vic1_dest = "http://"+ httpIP + ":" + httpPortNumber + "/maps/vic-map1.html"
@@ -116,11 +118,11 @@ function TwitterPage() {
 
          {/* Location buttons */}
         <Box sx={{ flexDirection:'column', marginBottom:'20px'}}>
-          <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_vic1_dest); setStateName("VIC1")}}>Victoria1</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_vic2_dest); setStateName("VIC2")}}>Victoria2</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_sydney_dest); setStateName("NSW")}}>New South Wales</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_adelaide_dest); setStateName("SA")}}>South Australia</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_queensland_dest); setStateName("QLD")}}>Queensland</Button>
+          <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_vic1_dest); setStateName("Victoria 1")}}>Victoria1</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_vic2_dest); setStateName("Victoria 2")}}>Victoria2</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_sydney_dest); setStateName("New South Wales")}}>New South Wales</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_adelaide_dest); setStateName("South Australia")}}>South Australia</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_queensland_dest); setStateName("Queensland")}}>Queensland</Button>
         </Box>
 
          {/* Big Box with drop down and graph */}
