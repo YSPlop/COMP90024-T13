@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 # coding: utf-8
 import json, couchdb, io, datetime
 import matplotlib

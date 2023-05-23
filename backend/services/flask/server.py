@@ -1,3 +1,4 @@
+# Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import couchdb
