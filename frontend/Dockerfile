@@ -1,5 +1,5 @@
 # taken from https://typeofnan.dev/how-to-serve-a-react-app-with-nginx-in-docker/
-
+# Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 # #RUN npm install @mui/material @emotion/react @emotion/styled --legacy-peer-deps
 # #RUN npm ci --legacy-peer-deps
 

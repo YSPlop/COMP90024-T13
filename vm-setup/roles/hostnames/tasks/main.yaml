@@ -1,3 +1,4 @@
+# Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 - name: Change hostname to defined name
   ansible.builtin.command: hostnamectl set-hostname {{hostvars[inventory_hostname]['name']}}
   become: yes
