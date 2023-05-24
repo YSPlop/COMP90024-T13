@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
-
-
 # Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 
 import couchdb
@@ -56,10 +53,3 @@ view = {
 }
 
 db.save(view)
-
-
-# In[ ]:
-
-
-
-
