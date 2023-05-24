@@ -53,6 +53,30 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
   }
 }
 
+function maybeText(stateName){
+
+  const vic1 = "Proportion of children whose parents report high levels of family stress"
+  const vic2 = "Family violence patient rate per 100k"
+  const nsw = "Percent of children in families where the mother has low educational attainment"
+  const qld = "Median Personal Income ($AUD)"
+  const sa = "Housing Stress Rate"
+
+  if (stateName == "Victoria 1"){
+    return <Typography variant="body">{vic1}</Typography>
+  }else if (stateName == "Victoria 2"){
+    return <Typography variant="body">{vic2}</Typography>
+  }else if (stateName == "New South Wales"){
+    return <Typography variant="body">{nsw}</Typography>
+  }else if (stateName == "South Australia"){
+    return <Typography variant="body">{sa}</Typography>
+  }else if (stateName == "Queensland"){
+    return <Typography variant="body">{qld}</Typography>
+  }else{
+    return "Invalid button"
+  }
+}
+
+
 
 function TwitterPage() {
 
@@ -148,6 +172,8 @@ function TwitterPage() {
                 {maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber, graphType)}
               </div>
           </Container>
+          <Container>{maybeText(stateName)}</Container>
+          
           
 
         </Box> 
