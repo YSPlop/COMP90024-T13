@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 
-
+# Add new Sudo json to CouchDB
 import geopandas as gpd
 
 df = gpd.read_file('./income.json')
 df.dropna(inplace = True)
-
-
-# In[4]:
-
 
 from shapely.geometry import MultiPolygon
 import couchdb
@@ -27,10 +23,3 @@ for index, row in df.iterrows():
         else:
             temp[col_name] = row[col_name]
     db.save(temp)
-
-
-# In[ ]:
-
-
-
-
