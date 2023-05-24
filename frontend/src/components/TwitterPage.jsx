@@ -8,17 +8,28 @@ import { Navigate } from 'react-router-dom';
 
 
 // Depnding on whether graph or statistics is required, display required information
-function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber){
+function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber, graphType){
 
   const width = 750;
 
 
   // image locations on server
-  const victoria1DemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/vic1.png";
-  const victoria2DemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/vic2.png"
-  const sydneyDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/nsw.png"
-  const adelaideDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/sa.png"
-  const brisbaneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/qld.png"
+  // by default you use scatter plot settings
+  let victoria1DemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/vic1_scatter.png";
+  let victoria2DemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/vic2_scatter.png"
+  let sydneyDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/nsw_scatter.png"
+  let adelaideDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/sa_scatter.png"
+  let brisbaneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/qld_scatter.png"
+
+  if (graphType == "Violin"){
+
+    victoria1DemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/vic1_violin.png";
+    victoria2DemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/vic2_violin.png"
+    sydneyDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/nsw_violin.png"
+    adelaideDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/sa_violin.png"
+    brisbaneDemographicURL = "http://" + httpIP + ":" + httpPortNumber + "/graphs/qld_violin.png"
+
+  }
 
 
   if (displayGraph == true){
@@ -26,16 +37,16 @@ function maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumbe
       return <iframe src= {iFrameLocation} width={1300} height="600"></iframe>
 
   }else{ 
-    if (stateName == "Victoria1"){
+    if (stateName == "Victoria 1"){
       return <img src={victoria1DemographicURL} alt="Victoria1Demographic" width = {width} height = "500"></img>
-    }else if (stateName == "Victoria2"){
+    }else if (stateName == "Victoria 2"){
       return <img src={victoria2DemographicURL} alt="Victoria2Demographic" width = {width} height = "500"></img>
-    }else if (stateName == "Sydney"){
-      return <img src={sydneyDemographicURL} alt="Sydney Demographic" width = {width} height = "500"></img>
-    }else if (stateName == "Adelaide"){
-      return <img src={adelaideDemographicURL} alt="AdelaideDemographic" width = {width} height = "500"></img>
-    }else if (stateName == "Brisbane"){
-      return <img src={brisbaneDemographicURL} alt="BrisbaneDemographic" width = {width} height = "500"></img>
+    }else if (stateName == "New South Wales"){
+      return <img src={sydneyDemographicURL} alt="NSW Demographic" width = {width} height = "500"></img>
+    }else if (stateName == "South Australia"){
+      return <img src={adelaideDemographicURL} alt="SADemographic" width = {width} height = "500"></img>
+    }else if (stateName == "Queensland"){
+      return <img src={brisbaneDemographicURL} alt="QLDDemographic" width = {width} height = "500"></img>
     }else{
       return "Invalid button"
     }
@@ -64,7 +75,9 @@ function TwitterPage() {
 
   // Drop down buttons
   const[displayGraph, setDisplayGraph] = React.useState(true);
-  const[stateName, setStateName] = React.useState("Victoria1");
+  const[stateName, setStateName] = React.useState("Victoria 1");
+
+  const[graphType, setGraphType] = React.useState("Scatter-Plot");
 
   // Navigation Control
   if (goToHome){
@@ -103,11 +116,11 @@ function TwitterPage() {
 
          {/* Location buttons */}
         <Box sx={{ flexDirection:'column', marginBottom:'20px'}}>
-          <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_vic1_dest); setStateName("Victoria1")}}>Victoria1</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_vic2_dest); setStateName("Victoria2")}}>Victoria2</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_sydney_dest); setStateName("Sydney")}}>Sydney</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_adelaide_dest); setStateName("Adelaide")}}>Adelaide</Button>
-          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_queensland_dest); setStateName("Brisbane")}}>Brisbane</Button>
+          <Button sx={{marginRight:'10px'}} variant='contained' onClick={()=> {setiFrameLocation(twitter_vic1_dest); setStateName("Victoria 1")}}>Victoria1</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_vic2_dest); setStateName("Victoria 2")}}>Victoria2</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_sydney_dest); setStateName("New South Wales")}}>New South Wales</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_adelaide_dest); setStateName("South Australia")}}>South Australia</Button>
+          <Button sx={{marginRight:'10px'}}variant='contained' onClick={()=> {setiFrameLocation(twitter_queensland_dest); setStateName("Queensland")}}>Queensland</Button>
         </Box>
 
          {/* Big Box with drop down and graph */}
@@ -120,8 +133,9 @@ function TwitterPage() {
                     Version
                   </Button>
                   <Menu {...bindMenu(popupState)}>
-                    <MenuItem onClick={() => {popupState.close; setDisplayGraph(true);}}>Graph</MenuItem>
-                    <MenuItem onClick={() => {popupState.close; setDisplayGraph(false);}}>Demographic</MenuItem>
+                    <MenuItem onClick={() => {popupState.close; setDisplayGraph(true);}}>Interactive Map</MenuItem>
+                    <MenuItem onClick={() => {popupState.close; setDisplayGraph(false); setGraphType("Scatter-Plot")}}>Scatter Plot</MenuItem>
+                    <MenuItem onClick={() => {popupState.close; setDisplayGraph(false); setGraphType("Violin")}}>Violin</MenuItem>
                   </Menu>
                 </React.Fragment>
               )}
@@ -131,7 +145,7 @@ function TwitterPage() {
           <Container>
               <Typography variant="h4">{stateName}</Typography>
               <div style={{ marginLeft: 0}}>
-                {maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber)}
+                {maybeMap(displayGraph, iFrameLocation, stateName, httpIP, httpPortNumber, graphType)}
               </div>
           </Container>
           
