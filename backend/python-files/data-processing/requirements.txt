@@ -1,1 +1,7 @@
-
+couchdb
+nltk
+reverse_geocoder
+numpy
+ijson
+geopandas
+shapely
