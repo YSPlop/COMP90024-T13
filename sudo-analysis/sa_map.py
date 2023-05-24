@@ -1,5 +1,5 @@
+# Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 import folium
-#import geopandas as gpd
 import matplotlib.pyplot as plt
 #import pandas as pd
 import seaborn as sns
@@ -31,12 +31,12 @@ if __name__ == "__main__":
         fill_color = "BuPu",
         fill_opacity = 0.7,
         line_opacity = 0.2,
-        legend_name = "Households in Income Stress").add_to(map)
+        legend_name = "Percentage of Households in Housing Stress").add_to(map)
     
 
     # add hover over pop up
     highlights = folium.features.GeoJson(df_plot,style_function= lambda x: {'color':'transparent', 'fillColor':'transparent', 'weight':0}, highlight_function = lambda x: {'fillColor': '#000000', 
-    'color':'#000000', 'fillOpacity': 0.50, 'weight': 0.1}, tooltip=folium.features.GeoJsonTooltip(fields=['lga_name16' , 'stress_rate', 'avg' ], aliases = [ "LGA", "Income Stress", "Sentiment Score"], labels = True,sticky = False))
+    'color':'#000000', 'fillOpacity': 0.50, 'weight': 0.1}, tooltip=folium.features.GeoJsonTooltip(fields=['lga_name16' , 'stress_rate', 'avg' ], aliases = [ "LGA", "Housing Stress Rate", "Sentiment Score"], labels = True,sticky = False))
     map.add_child(highlights)
     map.keep_in_front(highlights)
     map.save('sa-map.html')
@@ -71,5 +71,16 @@ if __name__ == "__main__":
     plt.title("Scatter Plot of Housing Stress and Tweet Sentiment", fontsize =16)
 
     # Save the plot as a PNG file
-    plt.savefig('sa_scater.png', format='png', dpi=300)
+    plt.savefig('sa_scatter.png', format='png', dpi=300)
+    # Set plot size
+    plt.figure(figsize=(12, 8))          
+    # Violin plot
+    sns.violinplot(data=df_filtered, x = 'stress_rate', orient='h')
+    # Set the x-axis label
+    plt.xlabel("Housing Stress Rate")
+    # Set the title
+    plt.title("Violin Plot of Housing Stress", fontsize =16)
+
+    # Save the plot as a PNG file
+    plt.savefig('sa_violin.png', format='png', dpi=300)
 

@@ -35,7 +35,7 @@ if __name__ == "__main__":
     
     # add hover over pop up
     highlights = folium.features.GeoJson(df_plot,style_function= lambda x: {'color':'transparent', 'fillColor':'transparent', 'weight':0}, highlight_function = lambda x: {'fillColor': '#000000', 
-    'color':'#000000', 'fillOpacity': 0.50, 'weight': 0.1}, tooltip=folium.features.GeoJsonTooltip(fields=['lga_name' , 'median_aud', 'avg' ], aliases = [ "LGA", "Family Stress", "Sentiment Score"], labels = True,sticky = False))
+    'color':'#000000', 'fillOpacity': 0.50, 'weight': 0.1}, tooltip=folium.features.GeoJsonTooltip(fields=['lga_name' , 'median_aud', 'avg' ], aliases = [ "LGA", "Median Personal Income", "Sentiment Score"], labels = True,sticky = False))
     map.add_child(highlights)
     map.keep_in_front(highlights)
 
@@ -72,3 +72,15 @@ if __name__ == "__main__":
 
     # Save the plot as a PNG file
     plt.savefig('qld_scatter.png', format='png', dpi=300)
+
+
+    # Set plot size
+    plt.figure(figsize=(12, 8))          
+    # Violin plot
+    sns.violinplot(data=df_filtered, x = 'median_aud', orient='h')
+    # Set the x-axis label
+    plt.xlabel("Median Personal Income ($AUD)")
+    # Set the title
+    plt.title("Violin Plot of Median Personal Income", fontsize =16)
+    # Save the plot as a PNG file
+    plt.savefig('qld_violin.png', format='png', dpi=300)
