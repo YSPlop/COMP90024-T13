@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
-
+# Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 
 import couchdb
 
 server = couchdb.Server('http://admin:password@172.26.131.88:5984')
 db = server['sudo']
 
+# Distribute data across machine by <label>
 map_1 = '''
 function(doc){
     if (doc.label == "children_mother_education") {
@@ -50,14 +50,14 @@ function(doc){
 '''
 
 
-
+# Reduce values to average
 reduce_function = '''
 function(keys, values, rereduce) {
     return sum(values)/values.length;
 }
 '''
 
-
+# Create views under _design/sudo
 view = {
     '_id': '_design/sudo',
     'views': {
@@ -85,10 +85,3 @@ view = {
 }
 
 db.save(view)
-
-
-# In[ ]:
-
-
-
-
