@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# Team 13: Alex Wang 1427869, Ka Shun Carson Young 1086178, Eldon Yeh 1276574, Yukash Sivaraj 1054297
 
-
+# Read Sudo json to data frame
 import geopandas as gpd
 
 df1 = gpd.read_file('./children_mother_education.json')
@@ -21,10 +21,7 @@ df4.dropna(inplace = True)
 df5 = gpd.read_file('./housing_stress.json')
 df5.dropna(inplace = True)
 
-
-# In[4]:
-
-
+# Process data and add to CouchDB
 from shapely.geometry import MultiPolygon
 import couchdb
 server = couchdb.Server("http://admin:password@172.26.131.88:5984/")
@@ -40,10 +37,6 @@ for index, row in df1.iterrows():
             temp[col_name] = row[col_name]
     db.save(temp)
 
-
-# In[5]:
-
-
 for index, row in df2.iterrows():
     temp = {}
     temp['label'] = 'family_stress'
@@ -53,10 +46,6 @@ for index, row in df2.iterrows():
         else:
             temp[col_name] = row[col_name]
     db.save(temp)
-
-
-# In[6]:
-
 
 for index, row in df3.iterrows():
     temp = {}
@@ -68,10 +57,6 @@ for index, row in df3.iterrows():
             temp[col_name] = row[col_name]
     db.save(temp)
 
-
-# In[7]:
-
-
 for index, row in df4.iterrows():
     temp = {}
     temp['label'] = 'family_violence_patient'
@@ -81,9 +66,6 @@ for index, row in df4.iterrows():
         else:
             temp[col_name] = row[col_name]
     db.save(temp)
-
-
-# In[8]:
 
 
 for index, row in df5.iterrows():
